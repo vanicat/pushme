@@ -39,9 +39,8 @@ class Heroes(MovingAgent):
     def __init__(self):
         self.image_name = 'heroes.png'
         MovingAgent.__init__(self,self.containers)
+        self.rect = self.image.get_rect(midbottom=SCREENRECT.midbottom)
 
-    def alive(self):
-        return True
 
 class Monsters(MovingAgent):
     def __init__(self):
@@ -64,8 +63,8 @@ def main():
     shots = pygame.sprite.Group()
     visible = pygame.sprite.RenderUpdates()
 
-    Heroes.containers = [visible]
-    Monsters.containers = [visible,monsters]
+    Heroes.containers = visible
+    Monsters.containers = visible, monsters
 
     player = Heroes()
     Monsters()
@@ -84,7 +83,6 @@ def main():
 
         #update visible the sprites
         visible.update()
-
 
         #draw the scene
         dirty = visible.draw(screen)
