@@ -32,16 +32,13 @@ CLOCK: [2015-04-18 sam. 18:38]--[2015-04-18 sam. 18:52] =>  0:14
 ** border condition
 CLOCK: [2015-04-18 sam. 18:53]--[2015-04-18 sam. 18:58] =>  0:05
 ** some AI
-CLOCK: [2015-04-18 sam. 18:58]
-* Savegarde
-#+name: joystick
-#+begin_src python
-  # joystiks
-  joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
-  if joysticks:
-      joysticks[0].init()
-
-  # elif event.type == JOYAXISMOTION:
-  #     print event
-  #     print '{}: axe {}, value {}'.format(event.joy,event.axis,event.value)
-#+end_src
+CLOCK: [2015-04-18 sam. 18:58]--[2015-04-18 sam. 20:12] =>  1:14
+** some food
+CLOCK: [2015-04-18 sam. 20:12]--[2015-04-18 sam. 21:18] =>  1:06
+** scoring
+CLOCK: [2015-04-18 sam. 21:34]--[2015-04-18 sam. 22:07] =>  0:33
+CLOCK: [2015-04-18 sam. 21:19]--[2015-04-18 sam. 21:30] =>  0:11
+** blog post!
+CLOCK: [2015-04-18 sam. 22:08]--[2015-04-18 sam. 22:45] =>  0:37
+** PAD again
+CLOCK: [2015-04-18 sam. 22:45]--[2015-04-18 sam. 23:16] =>  0:31
