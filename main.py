@@ -113,6 +113,12 @@ class Heroes(MovingAgent):
         self.locked = locked[0]
         locked[0].lock(self,locked[2],locked[1] > 0)
 
+    def unlock(self):
+        if self.locked:
+            self.locked.unlock()
+            self.locked = None
+
+
     def __call__(self,action):
         self.action[action]()
 
@@ -192,6 +198,7 @@ def main():
         K_LEFT: player.no_turn,
         K_DOWN: player.no_accel,
         K_UP: player.no_accel,
+        K_SPACE: player.unlock,
     }
 
     while player.alive():
