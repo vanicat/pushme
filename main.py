@@ -37,6 +37,7 @@ class MovingAgent(pygame.sprite.Sprite):
         self.posy = self.rect.centery
 
     def _adapt_direction(self):
+        self.image.fill((0,0,0,0))
         image = pygame.transform.rotate(self.src_image,-self.direction)
         rec = image.get_rect()
         xdec = (rec.width-self.width)/2
