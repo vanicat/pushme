@@ -9,6 +9,8 @@ import os.path, math
 
 SIZE           = 300
 SCREENRECT     = Rect(0, 0, 1000, 700)
+PLROTATESPEED  = 2
+BOTROTATESPEED = 1
 ROTATESPEED    = 1
 RANGE          = 200
 
@@ -45,10 +47,10 @@ class MovingAgent(pygame.sprite.Sprite):
         self.diry = math.sin(math.radians(self.direction))
 
     def turn_right(self):
-        self.turning = ROTATESPEED
+        self.turning = self.rotatespeed
 
     def turn_left(self):
-        self.turning = -ROTATESPEED
+        self.turning = -self.rotatespeed
 
     def no_turn(self):
         self.turning = 0
@@ -77,6 +79,8 @@ class MovingAgent(pygame.sprite.Sprite):
 class Heroes(MovingAgent):
     def __init__(self, targets):
         MovingAgent.__init__(self,self.containers)
+
+        self.rotatespeed = PLROTATESPEED
 
         self.targets = targets
 
@@ -134,6 +138,8 @@ class Heroes(MovingAgent):
 class Monsters(MovingAgent):
     def __init__(self,player):
         MovingAgent.__init__(self, self.containers)
+
+        self.rotatespeed = BOTROTATESPEED
 
         self.direction = 0
         self.speed = 1
