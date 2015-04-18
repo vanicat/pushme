@@ -4,10 +4,12 @@
 # https://creativecommons.org/publicdomain/zero/1.0/
 
 import pygame
-import os.path, math
 from pygame.locals import *
+import os.path, math
+
 
 SCREENRECT     = Rect(0, 0, 1000, 700)
+ROTATESPEED    = 10
 
 def load_image(name):
     fullname = os.path.join('data', name)
@@ -17,34 +19,50 @@ def load_image(name):
         print("Impossible de charger l'image : {0}", error)
         raise SystemExit, message
     image = image.convert_alpha()
-    return image, image.get_rect()
+    return image
 
 class MovingAgent(pygame.sprite.Sprite):
-    def __init__(self,containers):
+    def __init__(self, image_name, containers, **kwargs):
         pygame.sprite.Sprite.__init__(self,self.containers)
-        self.image, self.rect = load_image(self.image_name)
-        self.speed = 2
 
-    def move(self,direction):
-        if direction == 'up':
-            self.rect.move_ip(0, direction*self.speed)
-        elif direction == 'down':
-            self.rect.move_ip(0, -direction*self.speed)
-        elif direction == 'right':
-            self.rect.move_ip(direction*self.speed, 0)
-        else:
-            self.rect.move_ip(-direction*self.speed, 0)
+        self.image_name = image_name
+        self.src_image = load_image(self.image_name)
+        self.rect = self.src_image.get_rect(**kwargs)
+        self.width = self.rect.width
+        self.height = self.rect.height
+        self.image = pygame.Surface((self.width,self.height),flags=SRCALPHA).convert_alpha()
+
+        self.posx = self.rect.centerx
+        self.posy = self.rect.centery
+
+
+    def _adapt_speed(self):
+        self.xspeed = math.cos(math.radians(self.direction)) * self.speed
+        self.yspeed = math.sin(math.radians(self.direction)) * self.speed
+
+    def _adapt_direction(self):
+        image = pygame.transform.rotate(self.src_image,-self.direction-90)
+        rec = image.get_rect()
+        xdec = (rec.width-self.width)/2
+        ydec = (rec.height-self.height)/2
+        self.image.blit(image, (0,0),(xdec,ydec,xdec+self.width,ydec+self.height))
+
+
+    def update(self):
+        self.posx += self.xspeed
+        self.posy += self.yspeed
+        self.rect.center = (int(self.posx),int(self.posy))
+
 
 class Heroes(MovingAgent):
     def __init__(self):
-        self.image_name = 'heroes.png'
-        MovingAgent.__init__(self,self.containers)
-        self.orig_image=self.image
-        self.image=pygame.transform.rotate(self.orig_image,-90)
-        self.rect = self.image.get_rect(midbottom=SCREENRECT.midbottom)
-        self.direction = -math.pi/2
-        self.posx = self.rect.centerx
-        self.posy = self.rect.centery
+        MovingAgent.__init__(self,'heroes.png',self.containers,midbottom=SCREENRECT.midbottom)
+
+        self.direction = -90
+        self.speed = 2
+        self._adapt_speed()
+        self._adapt_direction()
+
         self.action = {
             K_RIGHT: self.turn_right,
             K_LEFT: self.turn_left,
@@ -52,44 +70,39 @@ class Heroes(MovingAgent):
             K_UP: self.accelerate,
         }
 
-    def _adapt_speed(self):
-        self.xspeed = math.cos(self._direction) * self.speed
-        self.yspeed = math.sin(self._direction) * self.speed
-
-    @property
-    def direction(self):
-        return self._direction
-
-    @direction.setter
-    def direction(self,dir):
-        self._direction = dir
-        self._adapt_speed()
-        self.image=pygame.transform.rotate(self.orig_image,-self.direction*180/math.pi-90)
-
-    def update(self):
-        self.posx += self.xspeed
-        self.posy += self.yspeed
-        self.rect.center = (int(self.posx),int(self.posy))
-
     def turn_right(self):
-        self.direction += 0.1
+        self.direction += ROTATESPEED
+        self._adapt_speed()
+        self._adapt_direction()
 
     def turn_left(self):
-        self.direction -= 0.1
+        self.direction -= ROTATESPEED
+        self._adapt_speed()
+        self._adapt_direction()
 
     def accelerate(self):
         self.speed += .1
+        self._adapt_speed()
 
     def brake(self):
         self.speed -= .1
+        self._adapt_speed()
 
     def __call__(self,action):
         self.action[action]()
 
+    def __contains__(self,action):
+        return action in self.action
+
 class Monsters(MovingAgent):
     def __init__(self):
-        self.image_name = 'monsters.png'
-        MovingAgent.__init__(self,self.containers)
+        MovingAgent.__init__(self,'monsters.png',self.containers)
+
+        self.direction = 0
+        self.speed = 1
+        self._adapt_speed()
+        self._adapt_direction()
+
 
 def main():
     pygame.init()
@@ -101,11 +114,15 @@ def main():
     # Repeat keys
     pygame.key.set_repeat(100,100)
 
+    # Set background
     background = pygame.Surface(screen.get_size()).convert()
+    imgbg = load_image('background.png')
     background.fill((250, 250, 250))
+    #background.blit(imgbg,(0,0))
     screen.blit(background, (0,0))
     pygame.display.flip()
 
+    # Groups of sprite
     monsters = pygame.sprite.Group()
     shots = pygame.sprite.Group()
     visible = pygame.sprite.RenderUpdates()
@@ -126,12 +143,8 @@ def main():
             if event.type == QUIT or \
                 (event.type == KEYDOWN and event.key == K_ESCAPE):
                     return
-            elif event.type == KEYDOWN:
-                if event.key == K_RIGHT:
-                    player.turn_right()
-                elif event.key == K_LEFT:
-                    player.turn_left()
-        keystate = pygame.key.get_pressed()
+            elif event.type == KEYDOWN and event.key in player:
+                player(event.key)
 
         # clear/erase the last drawn sprites
         visible.clear(screen, background)
