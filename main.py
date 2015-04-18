@@ -223,6 +223,18 @@ def main():
         #update visible the sprites
         visible.update()
 
+        compare_to = []
+        broken = set([])
+        for sprite in breakable:
+            for other in compare_to:
+                if sprite.dist(other) < (other.width + sprite.width)/2:
+                    broken.add(sprite)
+                    broken.add(other)
+            compare_to.append(sprite)
+
+        for sprite in broken:
+            sprite.kill()
+
         #draw the scene
         dirty = visible.draw(screen)
         pygame.display.update(dirty)
