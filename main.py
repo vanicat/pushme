@@ -173,11 +173,11 @@ def main():
 
     # Groups of sprite
     monsters = pygame.sprite.Group()
-    shots = pygame.sprite.Group()
+    breakable = pygame.sprite.Group()
     visible = pygame.sprite.RenderUpdates()
 
-    Heroes.containers = visible
-    Monsters.containers = visible, monsters
+    Heroes.containers = visible, breakable
+    Monsters.containers = visible, monsters, breakable
 
     # images
     Heroes.src_image = load_image('heroes.png')
