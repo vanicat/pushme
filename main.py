@@ -115,6 +115,28 @@ class Monsters(MovingAgent):
         self.direction = 0
         self.speed = 1
         self._adapt_direction()
+        self.locked = None
+
+    def update(self):
+        if self.locked:
+            locked = self.locked
+            self.direction = locked.direction + self.rotate
+            self.move_to(locked.posx + locked.xdir * self.distance,
+                         locked.posy + locked.ydir * self.distance)
+            self._adapt_direction()
+        else:
+            MovingAgent.update(self)
+
+    def lock(self, player, distance, direct):
+        self.locked = player
+        self.distance = distance
+        if direct:
+            self.rotate = -90
+        else:
+            self.rotate = 90
+
+    def unlock(self):
+        self.locked = None
 
 def main():
     pygame.init()
