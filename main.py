@@ -9,7 +9,7 @@ import os.path, math
 
 
 SCREENRECT     = Rect(0, 0, 1000, 700)
-ROTATESPEED    = 10
+ROTATESPEED    = 1
 
 def load_image(name):
     fullname = os.path.join('data', name)
@@ -60,19 +60,35 @@ class Heroes(MovingAgent):
         self.speed = 2
         self._adapt_direction()
 
+        self.accelerating = 0
+        self.turning = 0
+
     def turn_right(self):
-        self.direction += ROTATESPEED
-        self._adapt_direction()
+        self.turning = ROTATESPEED
 
     def turn_left(self):
-        self.direction -= ROTATESPEED
-        self._adapt_direction()
+        self.turning = -ROTATESPEED
+
+    def no_turn(self):
+        self.turning = 0
 
     def accelerate(self):
-        self.speed += .1
+        self.accelerating = .1
 
     def brake(self):
-        self.speed -= .1
+        self.accelerating = -.1
+
+    def no_accel(self):
+        self.accelerating = 0
+
+    def update(self):
+        self.speed += self.accelerating
+        if self.turning:
+            self.direction += self.turning
+            self._adapt_direction()
+
+        MovingAgent.update(self)
+
 
     def shoot(self):
         for target in self.targets:
@@ -101,9 +117,6 @@ def main():
     winstyle = 0  # |FULLSCREEN
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
-
-    # Repeat keys
-    pygame.key.set_repeat(100,100)
 
     # Set background
     background = pygame.Surface(screen.get_size()).convert()
