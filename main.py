@@ -52,6 +52,8 @@ class MovingAgent(pygame.sprite.Sprite):
         self.posx = x
         self.posy = y
         self.rect.center = (int(x),int(y))
+        if not SCREENRECT.contains(self.rect):
+            self.kill()
 
     def dist(self,other):
         return math.sqrt((other.posx-self.posx)**2 + (other.posy-self.posy)**2)
@@ -112,7 +114,7 @@ class Heroes(MovingAgent):
         if not in_range: return
         locked = min(in_range,key=thrd)
         self.locked = locked[0]
-        locked[0].lock(self,locked[2],locked[1] > 0)
+        locked[0].lock(locked[2],locked[1] > 0)
 
     def unlock(self):
         if self.locked:
@@ -127,26 +129,27 @@ class Heroes(MovingAgent):
         return action in self.action
 
 class Monsters(MovingAgent):
-    def __init__(self):
+    def __init__(self,player):
         MovingAgent.__init__(self, self.containers)
 
         self.direction = 0
         self.speed = 1
         self._adapt_direction()
-        self.locked = None
+        self.locked = False
+        self.player = player
 
     def update(self):
         if self.locked:
-            locked = self.locked
-            self.direction = locked.direction + self.rotate
-            self.move_to(locked.posx + locked.xdir * self.distance,
-                         locked.posy + locked.ydir * self.distance)
+            player = self.player
+            self.direction = player.direction + self.rotate
+            self.move_to(player.posx + player.xdir * self.distance,
+                         player.posy + player.ydir * self.distance)
             self._adapt_direction()
         else:
             MovingAgent.update(self)
 
-    def lock(self, player, distance, direct):
-        self.locked = player
+    def lock(self, distance, direct):
+        self.locked = True
         self.distance = distance
         if direct:
             self.rotate = 90
@@ -154,7 +157,7 @@ class Monsters(MovingAgent):
             self.rotate = -90
 
     def unlock(self):
-        self.locked = None
+        self.locked = False
 
 def main():
     pygame.init()
@@ -219,8 +222,7 @@ def main():
         if not monsters.sprites():
             nummonster += 1
             for i in range(nummonster):
-                Monsters().move_to(20,40*i)
-
+                Monsters(player).move_to(20,40*(i+1))
 
         # clear/erase the last drawn sprites
         visible.clear(screen, background)
