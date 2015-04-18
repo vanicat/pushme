@@ -41,12 +41,12 @@ class MovingAgent(pygame.sprite.Sprite):
         xdec = (rec.width-self.width)/2
         ydec = (rec.height-self.height)/2
         self.image.blit(image, (0,0),(xdec,ydec,xdec+self.width,ydec+self.height)) # Could use dirty sprite for this
-        self.xdir = math.cos(math.radians(self.direction))
-        self.ydir = math.sin(math.radians(self.direction))
+        self.dirx = math.cos(math.radians(self.direction))
+        self.diry = math.sin(math.radians(self.direction))
 
     def update(self):
-        self.move_to(self.posx + self.xdir * self.speed,
-                     self.posy + self.ydir * self.speed)
+        self.move_to(self.posx + self.dirx * self.speed,
+                     self.posy + self.diry * self.speed)
 
     def move_to(self,x,y):
         self.posx = x
@@ -107,7 +107,7 @@ class Heroes(MovingAgent):
 
         in_range = []
         for target in self.targets:
-            dist1 = (target.posx-self.posx)*self.ydir - (target.posy-self.posy)*self.xdir
+            dist1 = (target.posx-self.posx)*self.diry - (target.posy-self.posy)*self.dirx
             dist2 = target.dist(self)
             if abs(dist1) < target.height and dist2 > 0 and dist2 < RANGE:
                 in_range.append((target,dist1,dist2))
@@ -142,8 +142,8 @@ class Monsters(MovingAgent):
         if self.locked:
             player = self.player
             self.direction = player.direction + self.rotate
-            self.move_to(player.posx + player.xdir * self.distance,
-                         player.posy + player.ydir * self.distance)
+            self.move_to(player.posx + player.dirx * self.distance,
+                         player.posy + player.diry * self.distance)
             self._adapt_direction()
         else:
             MovingAgent.update(self)
