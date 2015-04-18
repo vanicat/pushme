@@ -45,6 +45,12 @@ class Heroes(MovingAgent):
         self.direction = -math.pi/2
         self.posx = self.rect.centerx
         self.posy = self.rect.centery
+        self.action = {
+            K_RIGHT: self.turn_right,
+            K_LEFT: self.turn_left,
+            K_DOWN: self.brake,
+            K_UP: self.accelerate,
+        }
 
     @property
     def direction(self):
@@ -67,6 +73,15 @@ class Heroes(MovingAgent):
 
     def turn_left(self):
         self.direction -= 0.1
+
+    def accelerate(self):
+        self.speed += .1
+
+    def brake(self):
+        self.speed -= .1
+
+    def __call__(self,action):
+        self.action[action]()
 
 class Monsters(MovingAgent):
     def __init__(self):
