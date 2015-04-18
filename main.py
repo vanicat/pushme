@@ -149,6 +149,13 @@ def main():
         K_SPACE: player.shoot,
     }
 
+    stoping = {
+        K_RIGHT: player.no_turn,
+        K_LEFT: player.no_turn,
+        K_DOWN: player.no_accel,
+        K_UP: player.no_accel,
+    }
+
     while player.alive():
         #get input
         for event in pygame.event.get():
@@ -157,6 +164,8 @@ def main():
                     return
             elif event.type == KEYDOWN and event.key in action:
                 action[event.key]()
+            elif event.type == KEYUP and event.key in stoping:
+                stoping[event.key]()
 
         # clear/erase the last drawn sprites
         visible.clear(screen, background)
