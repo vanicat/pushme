@@ -185,7 +185,7 @@ def main():
 
     # The actors
     player = Heroes(monsters)
-    Monsters().move_to(0,80)
+    nummonster = 2
 
     # a clock
     clock = pygame.time.Clock()
@@ -216,6 +216,11 @@ def main():
                 action[event.key]()
             elif event.type == KEYUP and event.key in stoping:
                 stoping[event.key]()
+        if not monsters.sprites():
+            nummonster += 1
+            for i in range(nummonster):
+                Monsters().move_to(20,40*i)
+
 
         # clear/erase the last drawn sprites
         visible.clear(screen, background)
