@@ -52,6 +52,10 @@ class Heroes(MovingAgent):
             K_UP: self.accelerate,
         }
 
+    def _adapt_speed(self):
+        self.xspeed = math.cos(self._direction) * self.speed
+        self.yspeed = math.sin(self._direction) * self.speed
+
     @property
     def direction(self):
         return self._direction
@@ -59,8 +63,7 @@ class Heroes(MovingAgent):
     @direction.setter
     def direction(self,dir):
         self._direction = dir
-        self.xspeed = math.cos(dir) * self.speed
-        self.yspeed = math.sin(dir) * self.speed
+        self._adapt_speed()
         self.image=pygame.transform.rotate(self.orig_image,-self.direction*180/math.pi-90)
 
     def update(self):
@@ -141,7 +144,7 @@ def main():
         pygame.display.update(dirty)
 
         #cap the framerate
-        clock.tick(40)
+        clock.tick(60)
 
     if pygame.mixer:
         pygame.mixer.music.fadeout(1000)
