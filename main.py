@@ -46,7 +46,7 @@ class Heroes(MovingAgent):
 
     @property
     def direction(self):
-        return _direction
+        return self._direction
 
     @direction.setter
     def direction(self,dir):
@@ -58,6 +58,12 @@ class Heroes(MovingAgent):
         self.posx += self.xspeed
         self.posy += self.yspeed
         self.rect.center = (int(self.posx),int(self.posy))
+
+    def turn_right(self):
+        self.direction -= 0.1
+
+    def turn_left(self):
+        self.direction += 0.1
 
 class Monsters(MovingAgent):
     def __init__(self):
@@ -71,6 +77,9 @@ def main():
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
 
+    # Repeat keys
+    pygame.key.set_repeat(100,100)
+
     background = pygame.Surface(screen.get_size()).convert()
     background.fill((250, 250, 250))
     screen.blit(background, (0,0))
@@ -83,16 +92,24 @@ def main():
     Heroes.containers = visible
     Monsters.containers = visible, monsters
 
+    # The actors
     player = Heroes()
     Monsters()
 
+    # a clock
     clock = pygame.time.Clock()
+
     while player.alive():
         #get input
         for event in pygame.event.get():
             if event.type == QUIT or \
                 (event.type == KEYDOWN and event.key == K_ESCAPE):
                     return
+            elif event.type == KEYDOWN:
+                if event.key == K_RIGHT:
+                    player.turn_right()
+                elif event.key == K_LEFT:
+                    player.turn_left()
         keystate = pygame.key.get_pressed()
 
         # clear/erase the last drawn sprites
