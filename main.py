@@ -24,6 +24,30 @@ def load_image(name):
     image = image.convert_alpha()
     return image
 
+
+class Scoring(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self,self.containers)
+        self.score = 0
+
+    def collide(self,fst,snd):
+        if fst.locked or snd.locked:
+            self.score += 200
+        else:
+            self.score += 100
+
+    def wall(self,dead):
+        if dead.locked:
+            self.score += 75
+        else:
+            self.score += 40
+
+    def update(self):
+        self.image=self.font.render("Score: {}".format(self.score),True, (0,0,0,255))
+        self.rect = self.image.get_rect(midtop=SCREENRECT.midtop)
+
+
+
 class MovingAgent(pygame.sprite.Sprite):
     def __init__(self, containers, **kwargs):
         pygame.sprite.Sprite.__init__(self,self.containers)
@@ -66,8 +90,6 @@ class MovingAgent(pygame.sprite.Sprite):
         self.posx = x
         self.posy = y
         self.rect.center = (int(x),int(y))
-        if not SCREENRECT.contains(self.rect):
-            self.kill()
 
     def center(self):
         self.move_to(SCREENRECT.centerx, SCREENRECT.centery)
@@ -196,14 +218,20 @@ def main():
 
     Heroes.containers = visible, breakable
     Monsters.containers = visible, monsters, breakable
+    Scoring.containers = visible
 
     # images
     Heroes.src_image = load_image('heroes.png')
     Monsters.src_image = load_image('monsters.png')
 
+    # fonts
+    Scoring.font = pygame.font.Font("data/Comfortaa-Light.ttf",20)
+
+
     # The actors
     player = Heroes(monsters)
     nummonster = 1
+    score = Scoring()
 
     # a clock
     clock = pygame.time.Clock()
@@ -252,10 +280,16 @@ def main():
         compare_to = []
         broken = set([])
         for sprite in breakable:
-            for other in compare_to:
-                if sprite.dist(other) < (other.width + sprite.width)/2:
-                    broken.add(sprite)
-                    broken.add(other)
+            if not SCREENRECT.contains(sprite.rect):
+                broken.add(sprite)
+                score.wall(sprite)
+            else:
+                for other in compare_to:
+                    if sprite.dist(other) < (other.width + sprite.width)/2:
+                        score.collide(sprite,other)
+                        broken.add(sprite)
+                        broken.add(other)
+
             compare_to.append(sprite)
 
         for sprite in broken:
