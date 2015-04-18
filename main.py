@@ -299,20 +299,26 @@ def main():
         #update visible the sprites
         if not paused: visible.update()
 
+        if not SCREENRECT.contains(player.rect):
+            player.kill()
+
         compare_to = []
         broken = set([])
-        for sprite in breakable:
-            if not SCREENRECT.contains(sprite.rect):
-                broken.add(sprite)
-                score.wall(sprite)
+        for sprite in monsters:
+            if sprite.dist(player) < (player.width + sprite.width)/2:
+                player.kill()
             else:
-                for other in compare_to:
-                    if sprite.dist(other) < (other.width + sprite.width)/2:
-                        score.collide(sprite,other)
-                        broken.add(sprite)
-                        broken.add(other)
+                if not SCREENRECT.contains(sprite.rect) and sprite.locked:
+                    broken.add(sprite)
+                    score.wall(sprite)
+                else:
+                    for other in compare_to:
+                        if sprite.dist(other) < (other.width + sprite.width)/2:
+                            score.collide(sprite,other)
+                            broken.add(sprite)
+                            broken.add(other)
 
-            compare_to.append(sprite)
+                compare_to.append(sprite)
 
         for sprite in broken:
             sprite.kill()
