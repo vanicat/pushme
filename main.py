@@ -105,7 +105,7 @@ class Heroes(MovingAgent):
         in_range = []
         for target in self.targets:
             dist1 = (target.posx-self.posx)*self.ydir - (target.posy-self.posy)*self.xdir
-            dist2 = (target.posx-self.posx)*self.xdir + target.posy-self.posy*self.ydir
+            dist2 = math.sqrt((target.posx-self.posx)**2 + (target.posy-self.posy)**2)
             if abs(dist1) < target.height and dist2 > 0 and dist2 < RANGE:
                 in_range.append((target,dist1,dist2))
         if not in_range: return
@@ -142,9 +142,9 @@ class Monsters(MovingAgent):
         self.locked = player
         self.distance = distance
         if direct:
-            self.rotate = -90
-        else:
             self.rotate = 90
+        else:
+            self.rotate = -90
 
     def unlock(self):
         self.locked = None
