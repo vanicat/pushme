@@ -7,27 +7,22 @@ import pygame
 import os.path
 from pygame.locals import *
 
-SCREENRECT     = Rect(0, 0, 640, 480)
+SCREENRECT     = Rect(0, 0, 1000, 700)
 
-
-def load_image(name, colorkey=None):
+def load_image(name):
     fullname = os.path.join('data', name)
     try:
         image = pygame.image.load(fullname)
     except pygame.error as error:
         print("Impossible de charger l'image : {0}", error)
         raise SystemExit, message
-    image = image.convert()
-    if colorkey is not None:
-        if colorkey is -1:
-            colorkey = image.get_at((0,0))
-        image.set_colorkey(colorkey, RLEACCEL)
+    image = image.convert_alpha()
     return image, image.get_rect()
 
 class MovingAgent(pygame.sprite.Sprite):
     def __init__(self,containers):
         pygame.sprite.Sprite.__init__(self,self.containers)
-        self.image, self.rect = load_image(self.image_name, -1)
+        self.image, self.rect = load_image(self.image_name)
         self.speed = 2
 
     def move(self,direction):
@@ -60,8 +55,10 @@ def main():
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
 
-    background = pygame.Surface(SCREENRECT.size)
-
+    background = pygame.Surface(screen.get_size()).convert()
+    background.fill((250, 250, 250))
+    screen.blit(background, (0,0))
+    pygame.display.flip()
 
     monsters = pygame.sprite.Group()
     shots = pygame.sprite.Group()
