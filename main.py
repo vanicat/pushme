@@ -39,6 +39,8 @@ class Heroes(MovingAgent):
     def __init__(self):
         self.image_name = 'heroes.png'
         MovingAgent.__init__(self,self.containers)
+        self.orig_image=self.image
+        self.image=pygame.transform.rotate(self.orig_image,-90)
         self.rect = self.image.get_rect(midbottom=SCREENRECT.midbottom)
         self.direction = -math.pi/2
         self.posx = self.rect.centerx
@@ -53,6 +55,7 @@ class Heroes(MovingAgent):
         self._direction = dir
         self.xspeed = math.cos(dir) * self.speed
         self.yspeed = math.sin(dir) * self.speed
+        self.image=pygame.transform.rotate(self.orig_image,-self.direction*180/math.pi-90)
 
     def update(self):
         self.posx += self.xspeed
