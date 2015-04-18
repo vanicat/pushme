@@ -10,6 +10,7 @@ import os.path, math
 
 SCREENRECT     = Rect(0, 0, 1000, 700)
 ROTATESPEED    = 1
+RANGE          = 200
 
 def load_image(name):
     fullname = os.path.join('data', name)
@@ -94,7 +95,7 @@ class Heroes(MovingAgent):
         for target in self.targets:
             dist1 = abs((target.posx-self.posx)*self.ydir - (target.posy-self.posy)*self.xdir)
             dist2 = (target.posx-self.posx)*self.xdir + target.posy-self.posy*self.ydir
-            if dist1 < target.height and dist2 > 0 and dist2 < 200: # magic number !
+            if dist1 < target.height and dist2 > 0 and dist2 < RANGE:
                 print 'its a hit'
 
     def __call__(self,action):
