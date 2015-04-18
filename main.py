@@ -53,6 +53,9 @@ class MovingAgent(pygame.sprite.Sprite):
         self.posy = y
         self.rect.center = (int(x),int(y))
 
+    def dist(self,other):
+        return math.sqrt((other.posx-self.posx)**2 + (other.posy-self.posy)**2)
+
 
 class Heroes(MovingAgent):
     def __init__(self, targets):
@@ -103,7 +106,7 @@ class Heroes(MovingAgent):
         in_range = []
         for target in self.targets:
             dist1 = (target.posx-self.posx)*self.ydir - (target.posy-self.posy)*self.xdir
-            dist2 = math.sqrt((target.posx-self.posx)**2 + (target.posy-self.posy)**2)
+            dist2 = target.dist(self)
             if abs(dist1) < target.height and dist2 > 0 and dist2 < RANGE:
                 in_range.append((target,dist1,dist2))
         if not in_range: return
