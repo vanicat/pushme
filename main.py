@@ -60,10 +60,10 @@ class Heroes(MovingAgent):
         self.rect.center = (int(self.posx),int(self.posy))
 
     def turn_right(self):
-        self.direction -= 0.1
+        self.direction += 0.1
 
     def turn_left(self):
-        self.direction += 0.1
+        self.direction -= 0.1
 
 class Monsters(MovingAgent):
     def __init__(self):
