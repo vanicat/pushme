@@ -46,9 +46,13 @@ class MovingAgent(pygame.sprite.Sprite):
         self.ydir = math.sin(math.radians(self.direction))
 
     def update(self):
-        self.posx += self.xdir * self.speed
-        self.posy += self.ydir * self.speed
-        self.rect.center = (int(self.posx),int(self.posy))
+        self.move_to(self.posx + self.xdir * self.speed,
+                     self.posy + self.ydir * self.speed)
+
+    def move_to(self,x,y):
+        self.posx = x
+        self.posy = y
+        self.rect.center = (int(x),int(y))
 
 
 class Heroes(MovingAgent):
