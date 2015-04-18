@@ -68,6 +68,8 @@ class Heroes(MovingAgent):
         self.accelerating = 0
         self.turning = 0
 
+        self.locked = None
+
     def turn_right(self):
         self.turning = ROTATESPEED
 
@@ -96,11 +98,19 @@ class Heroes(MovingAgent):
 
 
     def shoot(self):
+        def thrd(x):
+            x[2]
+
+        in_range = []
         for target in self.targets:
-            dist1 = abs((target.posx-self.posx)*self.ydir - (target.posy-self.posy)*self.xdir)
+            dist1 = (target.posx-self.posx)*self.ydir - (target.posy-self.posy)*self.xdir
             dist2 = (target.posx-self.posx)*self.xdir + target.posy-self.posy*self.ydir
-            if dist1 < target.height and dist2 > 0 and dist2 < RANGE:
-                print 'its a hit'
+            if abs(dist1) < target.height and dist2 > 0 and dist2 < RANGE:
+                in_range.append((target,dist1,dist2))
+        if not in_range: return
+        locked = min(in_range,key=thrd)
+        self.locked = locked[0]
+        locked[0].lock(self,locked[2],locked[1] > 0)
 
     def __call__(self,action):
         self.action[action]()
