@@ -23,11 +23,9 @@ def load_image(name):
     return image
 
 class MovingAgent(pygame.sprite.Sprite):
-    def __init__(self, image_name, containers, **kwargs):
+    def __init__(self, containers, **kwargs):
         pygame.sprite.Sprite.__init__(self,self.containers)
 
-        self.image_name = image_name
-        self.src_image = load_image(self.image_name)
         self.rect = self.src_image.get_rect(**kwargs)
         self.width = self.rect.width
         self.height = self.rect.height
@@ -58,7 +56,7 @@ class MovingAgent(pygame.sprite.Sprite):
 
 class Heroes(MovingAgent):
     def __init__(self, targets):
-        MovingAgent.__init__(self,'heroes.png',self.containers,midbottom=SCREENRECT.midbottom)
+        MovingAgent.__init__(self,self.containers,midbottom=SCREENRECT.midbottom)
 
         self.targets = targets
 
@@ -127,7 +125,7 @@ class Heroes(MovingAgent):
 
 class Monsters(MovingAgent):
     def __init__(self):
-        MovingAgent.__init__(self,'monsters.png',self.containers)
+        MovingAgent.__init__(self, self.containers)
 
         self.direction = 0
         self.speed = 1
@@ -177,6 +175,10 @@ def main():
 
     Heroes.containers = visible
     Monsters.containers = visible, monsters
+
+    # images
+    Heroes.src_image = load_image('heroes.png')
+    Monsters.src_image = load_image('monsters.png')
 
     # The actors
     player = Heroes(monsters)
