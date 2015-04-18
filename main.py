@@ -42,7 +42,7 @@ class MovingAgent(pygame.sprite.Sprite):
         rec = image.get_rect()
         xdec = (rec.width-self.width)/2
         ydec = (rec.height-self.height)/2
-        self.image.blit(image, (0,0),(xdec,ydec,xdec+self.width,ydec+self.height))
+        self.image.blit(image, (0,0),(xdec,ydec,xdec+self.width,ydec+self.height)) # Could use dirty sprite for this
         self.xdir = math.cos(math.radians(self.direction))
         self.ydir = math.sin(math.radians(self.direction))
 
