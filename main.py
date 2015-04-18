@@ -35,21 +35,18 @@ class MovingAgent(pygame.sprite.Sprite):
         self.posx = self.rect.centerx
         self.posy = self.rect.centery
 
-
-    def _adapt_speed(self):
-        self.xspeed = math.cos(math.radians(self.direction)) * self.speed
-        self.yspeed = math.sin(math.radians(self.direction)) * self.speed
-
     def _adapt_direction(self):
         image = pygame.transform.rotate(self.src_image,-self.direction)
         rec = image.get_rect()
         xdec = (rec.width-self.width)/2
         ydec = (rec.height-self.height)/2
         self.image.blit(image, (0,0),(xdec,ydec,xdec+self.width,ydec+self.height))
+        self.xdir = math.cos(math.radians(self.direction))
+        self.ydir = math.sin(math.radians(self.direction))
 
     def update(self):
-        self.posx += self.xspeed
-        self.posy += self.yspeed
+        self.posx += self.xdir * self.speed
+        self.posy += self.ydir * self.speed
         self.rect.center = (int(self.posx),int(self.posy))
 
 
@@ -59,7 +56,6 @@ class Heroes(MovingAgent):
 
         self.direction = -90
         self.speed = 2
-        self._adapt_speed()
         self._adapt_direction()
 
         self.action = {
@@ -71,21 +67,17 @@ class Heroes(MovingAgent):
 
     def turn_right(self):
         self.direction += ROTATESPEED
-        self._adapt_speed()
         self._adapt_direction()
 
     def turn_left(self):
         self.direction -= ROTATESPEED
-        self._adapt_speed()
         self._adapt_direction()
 
     def accelerate(self):
         self.speed += .1
-        self._adapt_speed()
 
     def brake(self):
         self.speed -= .1
-        self._adapt_speed()
 
     def __call__(self,action):
         self.action[action]()
@@ -99,9 +91,7 @@ class Monsters(MovingAgent):
 
         self.direction = 0
         self.speed = 1
-        self._adapt_speed()
         self._adapt_direction()
-
 
 def main():
     pygame.init()
