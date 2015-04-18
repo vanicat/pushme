@@ -40,12 +40,17 @@ class Heroes(MovingAgent):
         self.image_name = 'heroes.png'
         MovingAgent.__init__(self,self.containers)
         self.rect = self.image.get_rect(midbottom=SCREENRECT.midbottom)
-        self._set_speed(-math.pi/2)
+        self.direction = -math.pi/2
         self.posx = self.rect.centerx
         self.posy = self.rect.centery
 
-    def _set_speed(self,dir):
-        self.direction = dir
+    @property
+    def direction(self):
+        return _direction
+
+    @direction.setter
+    def direction(self,dir):
+        self._direction = dir
         self.xspeed = math.cos(dir) * self.speed
         self.yspeed = math.sin(dir) * self.speed
 
