@@ -44,7 +44,19 @@ class MovingAgent(pygame.sprite.Sprite):
         self.dirx = math.cos(math.radians(self.direction))
         self.diry = math.sin(math.radians(self.direction))
 
+    def turn_right(self):
+        self.turning = ROTATESPEED
+
+    def turn_left(self):
+        self.turning = -ROTATESPEED
+
+    def no_turn(self):
+        self.turning = 0
+
     def update(self):
+        if self.turning:
+            self.direction += self.turning
+            self._adapt_direction()
         self.move_to(self.posx + self.dirx * self.speed,
                      self.posy + self.diry * self.speed)
 
@@ -74,15 +86,6 @@ class Heroes(MovingAgent):
 
         self.locked = None
 
-    def turn_right(self):
-        self.turning = ROTATESPEED
-
-    def turn_left(self):
-        self.turning = -ROTATESPEED
-
-    def no_turn(self):
-        self.turning = 0
-
     def accelerate(self):
         self.accelerating = .1
 
@@ -94,9 +97,6 @@ class Heroes(MovingAgent):
 
     def update(self):
         self.speed += self.accelerating
-        if self.turning:
-            self.direction += self.turning
-            self._adapt_direction()
 
         MovingAgent.update(self)
 
@@ -139,8 +139,8 @@ class Monsters(MovingAgent):
         self.player = player
 
     def update(self):
+        player = self.player
         if self.locked:
-            player = self.player
             self.direction = player.direction + self.rotate
             self.move_to(player.posx + player.dirx * self.distance,
                          player.posy + player.diry * self.distance)
