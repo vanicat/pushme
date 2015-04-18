@@ -174,7 +174,7 @@ def main():
 
     # The actors
     player = Heroes(monsters)
-    Monsters()
+    Monsters().move_to(0,80)
 
     # a clock
     clock = pygame.time.Clock()
