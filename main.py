@@ -98,7 +98,7 @@ class Heroes(MovingAgent):
         MovingAgent.update(self)
 
 
-    def shoot(self):
+    def lock(self):
         def thrd(x):
             x[2]
 
@@ -184,7 +184,7 @@ def main():
         K_LEFT: player.turn_left,
         K_DOWN: player.brake,
         K_UP: player.accelerate,
-        K_SPACE: player.shoot,
+        K_SPACE: player.lock,
     }
 
     stoping = {
