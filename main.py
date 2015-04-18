@@ -219,6 +219,7 @@ def main():
                 action[event.key]()
             elif event.type == KEYUP and event.key in stoping:
                 stoping[event.key]()
+
         if not monsters.sprites():
             nummonster += 1
             for i in range(nummonster):
