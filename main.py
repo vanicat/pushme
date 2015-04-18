@@ -51,8 +51,10 @@ class MovingAgent(pygame.sprite.Sprite):
 
 
 class Heroes(MovingAgent):
-    def __init__(self):
+    def __init__(self, targets):
         MovingAgent.__init__(self,'heroes.png',self.containers,midbottom=SCREENRECT.midbottom)
+
+        self.targets = targets
 
         self.direction = -90
         self.speed = 2
@@ -120,7 +122,7 @@ def main():
     Monsters.containers = visible, monsters
 
     # The actors
-    player = Heroes()
+    player = Heroes(monsters)
     Monsters()
 
     # a clock
