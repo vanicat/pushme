@@ -41,12 +41,11 @@ class MovingAgent(pygame.sprite.Sprite):
         self.yspeed = math.sin(math.radians(self.direction)) * self.speed
 
     def _adapt_direction(self):
-        image = pygame.transform.rotate(self.src_image,-self.direction-90)
+        image = pygame.transform.rotate(self.src_image,-self.direction)
         rec = image.get_rect()
         xdec = (rec.width-self.width)/2
         ydec = (rec.height-self.height)/2
         self.image.blit(image, (0,0),(xdec,ydec,xdec+self.width,ydec+self.height))
-
 
     def update(self):
         self.posx += self.xspeed
