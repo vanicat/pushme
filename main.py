@@ -65,6 +65,7 @@ class Heroes(MovingAgent):
             K_LEFT: self.turn_left,
             K_DOWN: self.brake,
             K_UP: self.accelerate,
+            K_SPACE: self.shoot,
         }
 
     def turn_right(self):
@@ -80,6 +81,13 @@ class Heroes(MovingAgent):
 
     def brake(self):
         self.speed -= .1
+
+    def shoot(self):
+        for target in self.targets:
+            dist1 = abs((target.posx-self.posx)*self.ydir - (target.posy-self.posy)*self.xdir)
+            dist2 = (target.posx-self.posx)*self.xdir + target.posy-self.posy*self.ydir
+            if dist1 < target.height and dist2 > 0 and dist2 < 200: # magic number !
+                print 'its a hit'
 
     def __call__(self,action):
         self.action[action]()
