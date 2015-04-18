@@ -4,7 +4,7 @@
 # https://creativecommons.org/publicdomain/zero/1.0/
 
 import pygame
-import os.path
+import os.path, math
 from pygame.locals import *
 
 SCREENRECT     = Rect(0, 0, 1000, 700)
@@ -40,7 +40,12 @@ class Heroes(MovingAgent):
         self.image_name = 'heroes.png'
         MovingAgent.__init__(self,self.containers)
         self.rect = self.image.get_rect(midbottom=SCREENRECT.midbottom)
+        self._set_speed(0)
 
+    def _set_speed(self,dir):
+        self.direction = dir
+        self.xspeed = math.cos(dir) * self.speed
+        self.yspeed = math.sin(dir) * self.speed
 
 class Monsters(MovingAgent):
     def __init__(self):
