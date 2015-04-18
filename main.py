@@ -119,7 +119,7 @@ class Heroes(MovingAgent):
         self.locked = locked[0]
         locked[0].lock(locked[2],locked[1] > 0)
 
-    def unlock(self):
+    def unlock(self):           # Dying monster are not unlocked...
         if self.locked:
             self.locked.unlock()
             self.locked = None
@@ -166,7 +166,7 @@ class Monsters(MovingAgent):
             self.rotate = -90
 
     def unlock(self):
-        self.locked = False
+        pass
 
 def main():
     pygame.init()
