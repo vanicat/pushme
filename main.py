@@ -146,6 +146,12 @@ class Monsters(MovingAgent):
                          player.posy + player.diry * self.distance)
             self._adapt_direction()
         else:
+            determinant = self.dirx*(self.posy-player.posy)-self.diry*(self.posx-player.posx)
+            if determinant > 0:
+                self.turn_left()
+            else:
+                self.turn_right()
+
             MovingAgent.update(self)
 
     def lock(self, distance, direct):
