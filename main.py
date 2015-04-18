@@ -115,6 +115,12 @@ class Heroes(MovingAgent):
 
         self.locked = None
 
+    def turn(self, value):
+        self.turning = self.rotatespeed * value
+
+    def accel(self, value):
+        self.accelerating = .1 * value
+
     def accelerate(self):
         self.accelerating = .1
 
@@ -252,16 +258,27 @@ def main():
         K_SPACE: player.unlock,
     }
 
+    joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+    if joysticks:
+        joystick=joysticks[0]
+        joystick.init()
+
     while player.alive():
         #get input
         for event in pygame.event.get():
-            if event.type == QUIT or \
-                (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    return
-            elif event.type == KEYDOWN and event.key in action:
+            if event.type == KEYDOWN and event.key in action:
                 action[event.key]()
             elif event.type == KEYUP and event.key in stoping:
                 stoping[event.key]()
+            elif event.type == JOYAXISMOTION and event.joy == 0 and event.axis == 0:
+                player.turn(event.value)
+            elif event.type == JOYAXISMOTION and event.joy == 0 and event.axis == 1:
+                player.accel(-event.value)
+            elif event.type == JOYBUTTONDOWN and event.joy == 0 and event.button == 0:
+                player.lock()
+            elif event.type == QUIT or \
+                (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    return
 
         if not monsters.sprites():
             player.center()
