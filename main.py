@@ -258,6 +258,8 @@ def main():
         K_SPACE: player.unlock,
     }
 
+    paused = False
+
     joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
     if joysticks:
         joystick=joysticks[0]
@@ -279,6 +281,9 @@ def main():
             elif event.type == QUIT or \
                 (event.type == KEYDOWN and event.key == K_ESCAPE):
                     return
+            elif event.type == KEYDOWN and event.key == K_RETURN:
+                paused = not paused
+
 
         if not monsters.sprites():
             player.center()
@@ -292,7 +297,7 @@ def main():
         visible.clear(screen, background)
 
         #update visible the sprites
-        visible.update()
+        if not paused: visible.update()
 
         compare_to = []
         broken = set([])
