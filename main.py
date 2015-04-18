@@ -1,13 +1,13 @@
 #! /bin/env python2
 # Copyright Remi Vanicat <vanicat@debian.org>
-# Licence under CC0: do what ever you want from this
+# Licence under CC0: do what ever you want with this
 # https://creativecommons.org/publicdomain/zero/1.0/
 
 import pygame
 from pygame.locals import *
 import os.path, math
 
-
+SIZE           = 300
 SCREENRECT     = Rect(0, 0, 1000, 700)
 ROTATESPEED    = 1
 RANGE          = 200
@@ -67,13 +67,16 @@ class MovingAgent(pygame.sprite.Sprite):
         if not SCREENRECT.contains(self.rect):
             self.kill()
 
+    def center(self):
+        self.move_to(SCREENRECT.centerx, SCREENRECT.centery)
+
     def dist(self,other):
         return math.sqrt((other.posx-self.posx)**2 + (other.posy-self.posy)**2)
 
 
 class Heroes(MovingAgent):
     def __init__(self, targets):
-        MovingAgent.__init__(self,self.containers,midbottom=SCREENRECT.midbottom)
+        MovingAgent.__init__(self,self.containers)
 
         self.targets = targets
 
@@ -194,7 +197,7 @@ def main():
 
     # The actors
     player = Heroes(monsters)
-    nummonster = 2
+    nummonster = 1
 
     # a clock
     clock = pygame.time.Clock()
@@ -227,9 +230,12 @@ def main():
                 stoping[event.key]()
 
         if not monsters.sprites():
+            player.center()
             nummonster += 1
+            angle = 2*math.pi/nummonster
             for i in range(nummonster):
-                Monsters(player).move_to(20,40*(i+1))
+                Monsters(player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
+                                         SCREENRECT.centery+SIZE*math.sin(angle*i))
 
         # clear/erase the last drawn sprites
         visible.clear(screen, background)
