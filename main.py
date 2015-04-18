@@ -60,14 +60,6 @@ class Heroes(MovingAgent):
         self.speed = 2
         self._adapt_direction()
 
-        self.action = {
-            K_RIGHT: self.turn_right,
-            K_LEFT: self.turn_left,
-            K_DOWN: self.brake,
-            K_UP: self.accelerate,
-            K_SPACE: self.shoot,
-        }
-
     def turn_right(self):
         self.direction += ROTATESPEED
         self._adapt_direction()
@@ -136,14 +128,22 @@ def main():
     # a clock
     clock = pygame.time.Clock()
 
+    action = {
+        K_RIGHT: player.turn_right,
+        K_LEFT: player.turn_left,
+        K_DOWN: player.brake,
+        K_UP: player.accelerate,
+        K_SPACE: player.shoot,
+    }
+
     while player.alive():
         #get input
         for event in pygame.event.get():
             if event.type == QUIT or \
                 (event.type == KEYDOWN and event.key == K_ESCAPE):
                     return
-            elif event.type == KEYDOWN and event.key in player:
-                player(event.key)
+            elif event.type == KEYDOWN and event.key in action:
+                action[event.key]()
 
         # clear/erase the last drawn sprites
         visible.clear(screen, background)
