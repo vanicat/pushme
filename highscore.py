@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from itertools import imap
 
 import const
 import bisect
@@ -30,10 +31,14 @@ class Highscore():
         self.scores = []
 
     def add(self,score):
-        bisect.insort(self.scores, score)
+        if not score:
+            score = 0
+        bisect.insort(self.scores, -score)
 
     def __iter__(self):
-        return enumerate(self.scores)
+        def opose((n,i)):
+            return (n+1,-i)
+        return imap(opose,enumerate(self.scores))
 
 highscore = Highscore()
 
@@ -53,7 +58,7 @@ def call(screen,score):
     Item.containers = visible
 
     for i, s in highscore:
-        Item(screen.get_width()/2,i+1,s)
+        Item(screen.get_width()/2,i,s)
     # a clock
     clock = pygame.time.Clock()
 
