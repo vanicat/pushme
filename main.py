@@ -12,6 +12,7 @@ import const
 from actors import *
 from scoring import *
 import menu
+import highscore
 
 def load_image(name):
     fullname = os.path.join('data', name)
@@ -156,7 +157,8 @@ def main():
 
     todo = menu.menu(screen)
     while todo != 'quit':
-        game(screen)
+        score = game(screen)
+        highscore.call(screen,score)
         todo = menu.menu(screen)
 
     if pygame.mixer:
