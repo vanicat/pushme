@@ -4,7 +4,8 @@ from pygame.locals import *
 import const
 
 class MenuEntry(pygame.sprite.Sprite):
-    def __init__(self,label,result,width,prev = None):
+    prev = None
+    def __init__(self,label,result,width):
         pygame.sprite.Sprite.__init__(self,self.containers)
 
         self.image = pygame.Surface((width,const.MENUHEIGHT),flags=SRCALPHA).convert_alpha()
@@ -21,8 +22,9 @@ class MenuEntry(pygame.sprite.Sprite):
 
         self.result   = result
 
-        self.prev = prev
-        if prev:
+        self.prev = MenuEntry.prev
+        MenuEntry.prev = self
+        if self.prev:
             self.prev.next = self
         self.next = None
 
@@ -53,10 +55,9 @@ def menu(screen):
 
     MenuEntry.pos = 0
 
-    menu = MenuEntry("Play",'play',screen.get_width())
-    selected_entry.add(menu)
-    menu = MenuEntry("Highscore",'score',screen.get_width(),prev=menu)
-    menu = MenuEntry("Quit",'quit',screen.get_width(),prev=menu)
+    selected_entry.add(MenuEntry("Play",'play',screen.get_width()))
+    MenuEntry("Highscore",'score',screen.get_width())
+    MenuEntry("Quit",'quit',screen.get_width())
 
     # a clock
     clock = pygame.time.Clock()
