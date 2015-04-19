@@ -59,6 +59,10 @@ def game(screen):
     Heroes.src_image = load_image('heroes.png')
     Monsters.src_image = load_image('monsters.png')
 
+    # sounds
+    Heroes.fail_sound = load_sound('failed.wav')
+    Heroes.lock_sound = load_sound('success.wav')
+
     # The actors
     player = Heroes(monsters)
     nummonster = 1

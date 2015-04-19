@@ -108,7 +108,10 @@ class Heroes(MovingAgent):
             dist2 = target.dist(self)
             if abs(dist1) < target.height and dist2 > 0 and dist2 < RANGE:
                 in_range.append((target,dist1,dist2))
-        if not in_range: return
+        if not in_range:
+            self.fail_sound.play()
+            return
+        self.lock_sound.play()
         locked = min(in_range,key=thrd)
         self.locked.sprite = locked[0]
         locked[0].lock(locked[2],locked[1] > 0)
