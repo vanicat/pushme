@@ -17,6 +17,6 @@ class font:
     highscore = None
 
 def font_init():
-    font.default = pygame.font.Font("data/font/Reality Hyper Regular.ttf",20)
-    font.menu = pygame.font.Font("data/font/darktech_ldr.ttf",40)
-    font.highscore = pygame.font.Font("data/font/Squares Bold Free.otf",40)
+    font.default = pygame.font.Font("data/font/Squares Bold Free.otf",40)
+    font.menu = font.default
+    font.highscore = font.default
