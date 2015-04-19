@@ -24,6 +24,19 @@ def load_image(name):
     image = image.convert_alpha()
     return image
 
+class dummysound:
+    def play(self): pass
+
+def load_sound(file):
+    if not pygame.mixer: return dummysound()
+    file = os.path.join('data', file)
+    try:
+        sound = pygame.mixer.Sound(file)
+        return sound
+    except pygame.error:
+        print ('Warning, unable to load, %s' % file)
+    return dummysound()
+
 def game(screen):
     # Set background
     background = pygame.Surface(screen.get_size()).convert()
@@ -148,6 +161,10 @@ def game(screen):
 
 def main():
     pygame.init()
+
+    if pygame.mixer and not pygame.mixer.get_init():
+        print ('Warning, no sound')
+        pygame.mixer = None
 
     const.font_init()
     # Set the display mode
