@@ -161,9 +161,9 @@ def game(screen):
         compare_to = []
         broken = set([])
         for sprite in monsters:
-            if sprite.dist(player) < (player.width + sprite.width)/2:
+            if sprite.dist(player) < (player.width + sprite.width - 4 )/2:
                 player.kill()
-            else:
+            elif sprite not in broken:
                 if not SCREENRECT.contains(sprite.rect) and sprite.locked:
                     r = sprite.width/2
                     if sprite.posx - r < SCREENRECT.left:
@@ -176,13 +176,12 @@ def game(screen):
                         sprite.posy = SCREENRECT.bottom - r
                     sprite.distance = sprite.dist(player)
 
-                elif sprite not in broken:
-                    for other in compare_to:
-                        if sprite.dist(other) < sprite.width:
-                            score.collide(sprite,other)
-                            broken.add(sprite)
-                            broken.add(other)
-                            break
+                for other in compare_to:
+                    if sprite.dist(other) < sprite.width - 3:
+                        score.collide(sprite,other)
+                        broken.add(sprite)
+                        broken.add(other)
+                        break
 
                 compare_to.append(sprite)
 
