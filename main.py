@@ -41,13 +41,26 @@ def end_sound(clock):
     while pygame.mixer.get_busy():
         clock.tick(60)
 
+def background_filling(background):
+    background.fill((62,120,112))
+    imgbg = load_image('background-tile.png')
+    rect = imgbg.get_rect()
+    height=rect.height
+    width=rect.width
+    rect.move_ip((-10,-32))
+    for i in range(13):
+        for j in range(8):
+            background.blit(imgbg,rect.move((i*(width+3),j*(height+54))))
+            background.blit(imgbg,rect.move((i*(width+3)-width/2-2,j*(height+54)+77)))
+
+
 
 def game(screen):
     # Set background
     background = pygame.Surface(screen.get_size()).convert()
-    imgbg = load_image('background.png')
-    background.fill((250, 250, 250))
-    #background.blit(imgbg,(0,0))
+
+    background_filling(background)
+
     screen.blit(background, (0,0))
     pygame.display.flip()
 
