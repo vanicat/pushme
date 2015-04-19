@@ -205,8 +205,11 @@ def main():
 
     todo = menu.menu(screen)
     while todo != 'quit':
-        score = game(screen)
-        highscore.call(screen,score)
+        if todo == 'play':
+            score = game(screen)
+            highscore.call(screen,score)
+        elif todo == 'score':
+            highscore.call(screen,None)
         todo = menu.menu(screen)
 
     if pygame.mixer:
