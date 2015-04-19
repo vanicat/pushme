@@ -37,6 +37,11 @@ def load_sound(file):
         print ('Warning, unable to load, %s' % file)
     return dummysound()
 
+def end_sound(clock):
+    while pygame.mixer.get_busy():
+        clock.tick(60)
+
+
 def game(screen):
     # Set background
     background = pygame.Surface(screen.get_size()).convert()
@@ -62,6 +67,13 @@ def game(screen):
     # sounds
     Heroes.fail_sound = load_sound('failed.wav')
     Heroes.lock_sound = load_sound('success.wav')
+
+    Heroes.die_sound = load_sound('die.wav')
+
+    Monsters.die_sound = load_sound('killing.wav')
+    Monsters.wall_sound = load_sound('wall.wav')
+
+    newlevel_sound = load_sound('end-level.wav')
 
     # The actors
     player = Heroes(monsters)
@@ -115,6 +127,8 @@ def game(screen):
 
 
         if not monsters.sprites():
+            end_sound(clock)
+            newlevel_sound.play()
             player.center()
             nummonster += 1
             angle = 2*math.pi/nummonster
@@ -158,6 +172,9 @@ def game(screen):
 
         #cap the framerate
         clock.tick(60)
+
+    end_sound(clock)
+
     return score.score
 
 

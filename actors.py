@@ -92,6 +92,9 @@ class Heroes(MovingAgent):
 
         MovingAgent.update(self)
 
+    def kill(self):
+        self.die_sound.play()
+        MovingAgent.kill(self)
 
     def lock(self):
         def thrd(x):
@@ -163,3 +166,7 @@ class Monsters(MovingAgent):
 
     def unlock(self):
         self.locked = False
+
+    def kill(self):
+        self.die_sound.play()
+        MovingAgent.kill(self)
