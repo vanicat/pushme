@@ -9,12 +9,12 @@ BOTROTATESPEED = 1
 ROTATESPEED    = 1
 RANGE          = 200
 
-MENUHEIGHT     = 50
+MENUHEIGHT     = 70
 
 font = None
 font_menu = None
 
 def font_init():
     global font, font_menu
-    font = pygame.font.Font("data/Comfortaa-Light.ttf",20)
-    font_menu = font
+    font = pygame.font.Font("data/font/Reality Hyper Regular.ttf",20)
+    font_menu = pygame.font.Font("data/font/darktech_ldr.ttf",40)

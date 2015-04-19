@@ -2,6 +2,9 @@ This game has been created by Rémi Vanicat <vanicat at debian.org>, with the gr
 (http://shirogames.com/)
 
 Copyright ©2015 Rémi Vanicat
-all code is Licenced under CC0, as file in data/*
-this programe include the "Darktech LDR" is ©Michał “Neoqueto” under a Creative Commons Attribution Share Alike license
-(http://creativecommons.org/licenses/by-sa/3.0/).
+all code is Licenced under CC0, as file directly in data/*
+
+This include
+ - the "Darktech LDR" font is ©Michał “Neoqueto” under a Creative Commons Attribution Share Alike license
+   (http://creativecommons.org/licenses/by-sa/3.0/).
+ - the "Reality Hyper" is © Grand Chaos Productions, under SIL OPEN FONT LICENSE, included.
