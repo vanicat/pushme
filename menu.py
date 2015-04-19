@@ -3,6 +3,31 @@ from pygame.locals import *
 
 import const
 
+class LineC():
+    def lf(self):
+        Line.pos += const.LINEHEIGHT
+
+    def menu_lf(self):
+        Line.pos += const.MENUHEIGHT
+
+    def output(self, text, color, font, lf):
+        label = font.render(text, True, color)
+        text_rect = label.get_rect(midtop=const.SCREENRECT.midtop)
+        text_rect.move_ip(0,Line.pos)
+        self.screen.blit(label,text_rect)
+        lf()
+
+
+    def big(self, text, color = (0,0,0,255)):
+        self.output(text, color, const.font.other, self.menu_lf)
+
+    def small(self, text, color = (0,0,0,255)):
+        self.output(text, color, const.font.small, self.lf)
+
+
+Line = LineC()
+
+
 class MenuEntry(pygame.sprite.Sprite):
     prev = None
     def __init__(self,label,result,width):
@@ -17,8 +42,9 @@ class MenuEntry(pygame.sprite.Sprite):
         self.label = const.font.menu.render(label, True, (0,0,0,255))
         self.label_rect = self.label.get_rect(center=self.rect.center)
 
-        self.rect.move_ip(0,MenuEntry.pos)
-        MenuEntry.pos += const.MENUHEIGHT
+        self.rect.move_ip(0,Line.pos)
+
+        Line.menu_lf()
 
         self.result   = result
 
@@ -37,7 +63,6 @@ class MenuEntry(pygame.sprite.Sprite):
         self.image.blit(self.label, self.label_rect)
 
 
-
 def menu(screen):
     background = pygame.Surface(screen.get_size()).convert()
     # imgbg = load_image('background-menu.png')
@@ -52,8 +77,22 @@ def menu(screen):
     visible = pygame.sprite.RenderUpdates()
 
     MenuEntry.containers = visible, entries
+    Line.pos = 0
+    Line.screen = screen
 
-    MenuEntry.pos = 0
+    Line.lf()
+    Line.big("Move Them",color = (22,22,90))
+    Line.small("You are alone")
+    Line.small("They want you")
+    Line.small("And this is not a cannon you have")
+    Line.lf()
+    Line.lf()
+    Line.lf()
+    Line.small("Use arrow key to control, space to lock")
+    Line.small("or a pad (A to lock)")
+    Line.lf()
+
+    pygame.display.flip()
 
     selected_entry.add(MenuEntry("Play",'play',screen.get_width()))
     MenuEntry("Highscore",'score',screen.get_width())
