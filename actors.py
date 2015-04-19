@@ -136,7 +136,7 @@ class Monsters(MovingAgent):
         self.rotatespeed = BOTROTATESPEED
 
         self.direction = 0
-        self.speed = 1
+        self.speed = MONSTERSPEED
         self._adapt_direction()
         self.locked = False
         self.player = player
