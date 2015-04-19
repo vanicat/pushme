@@ -31,9 +31,8 @@ class Highscore():
         self.scores = []
 
     def add(self,score):
-        if not score:
-            score = 0
-        bisect.insort(self.scores, -score)
+        if score is not None:
+            bisect.insort(self.scores, -score)
 
     def __iter__(self):
         def opose((n,i)):

@@ -121,7 +121,7 @@ def game(screen):
                 player.lock()
             elif event.type == QUIT or \
                 (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    return
+                return score.score
             elif event.type == KEYDOWN and event.key == K_RETURN:
                 paused = not paused
 
