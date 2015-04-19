@@ -188,14 +188,15 @@ def game(screen):
     return score.score
 
 
-
-
 def main():
     pygame.init()
 
     if pygame.mixer and not pygame.mixer.get_init():
         print ('Warning, no sound')
         pygame.mixer = None
+
+    pygame.mixer.music.load('data/tchtada.ogg')
+    pygame.mixer.music.play(-1)
 
     const.font_init()
     # Set the display mode

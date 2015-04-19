@@ -56,3 +56,8 @@ CLOCK: [2015-04-19 dim. 14:00]--[2015-04-19 dim. 16:38] =>  2:38
 CLOCK: [2015-04-19 dim. 16:40]--[2015-04-19 dim. 16:43] =>  0:03
 ** Do not kill enemies on wall, and sort highscore
 CLOCK: [2015-04-19 dim. 16:44]--[2015-04-19 dim. 17:15] =>  0:31
+** More highscore: in menu
+CLOCK: [2015-04-19 dim. 17:15]--[2015-04-19 dim. 17:41] =>  0:26
+** music
+CLOCK: [2015-04-19 dim. 17:41]--[2015-04-19 dim. 18:29] =>  0:48
+** Background and colors ?
