@@ -60,4 +60,8 @@ CLOCK: [2015-04-19 dim. 16:44]--[2015-04-19 dim. 17:15] =>  0:31
 CLOCK: [2015-04-19 dim. 17:15]--[2015-04-19 dim. 17:41] =>  0:26
 ** music
 CLOCK: [2015-04-19 dim. 17:41]--[2015-04-19 dim. 18:29] =>  0:48
-** Background and colors ?
+** Background and colors
+CLOCK: [2015-04-19 dim. 22:52]--[2015-04-19 dim. 22:54] =>  0:02
+CLOCK: [2015-04-19 dim. 18:29]--[2015-04-19 dim. 21:10] =>  2:41
+** tuning speed, placement...
+CLOCK: [2015-04-19 dim. 22:54]
