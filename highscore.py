@@ -48,6 +48,10 @@ def call(screen,score):
     background = pygame.Surface(screen.get_size()).convert()
     # imgbg = load_image('background-menu.png')
     background.fill((250, 250, 250))
+
+    title = const.font.highscore.render("Highscore", True, (0,0,0,255))
+    rect = title.get_rect(midtop=background.get_rect().midtop)
+    background.blit(title,rect)
     #background.blit(imgbg,(0,0))
     screen.blit(background, (0,0))
     pygame.display.flip()
