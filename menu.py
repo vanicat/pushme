@@ -62,7 +62,6 @@ class MenuEntry(pygame.sprite.Sprite):
         self.image.fill((0, 0, 0, alpha))
         self.image.blit(self.label, self.label_rect)
 
-
 def menu(screen):
     background = pygame.Surface(screen.get_size()).convert()
     # imgbg = load_image('background-menu.png')
@@ -101,17 +100,38 @@ def menu(screen):
     # a clock
     clock = pygame.time.Clock()
 
+    def noop(): pass
+    def next():
+        if selected_entry.sprite.next:
+            selected_entry.add(selected_entry.sprite.next)
+    def prev():
+        if selected_entry.sprite.prev:
+            selected_entry.add(selected_entry.sprite.prev)
+
+
     while True:
+        nextaction = noop
         for event in pygame.event.get():
             if event.type == QUIT or \
                 (event.type == KEYDOWN and event.key == K_ESCAPE):
                 return 'quit'
             elif event.type == KEYDOWN and event.key == K_RETURN:
                 return selected_entry.sprite.result
-            elif event.type == KEYDOWN and event.key == K_UP and selected_entry.sprite.prev:
-                selected_entry.add(selected_entry.sprite.prev)
-            elif event.type == KEYDOWN and event.key == K_DOWN and selected_entry.sprite.next:
-                selected_entry.add(selected_entry.sprite.next)
+            elif event.type == KEYDOWN and event.key == K_UP:
+                nextaction = prev
+            elif event.type == KEYDOWN and event.key == K_DOWN:
+                nextaction = next
+            elif event.type == JOYAXISMOTION and event.joy == 0 and event.axis == 1:
+                if event.value > 0.5:
+                    nextaction = next
+                elif event.value < -0.5:
+                    nextaction = prev
+            elif event.type == JOYBUTTONDOWN and event.joy == 0 and event.button == 0:
+                return selected_entry.sprite.result
+            elif event.type == JOYBUTTONDOWN and event.joy == 0 and (event.button == 2 or event.button == 6):
+                return 'quit'
+
+        nextaction()
 
         visible.clear(screen, background)
 
@@ -123,4 +143,4 @@ def menu(screen):
         pygame.display.update(dirty)
 
         #cap the framerate
-        clock.tick(60)
+        clock.tick(5)

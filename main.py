@@ -114,11 +114,6 @@ def game(screen):
 
     paused = False
 
-    joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
-    if joysticks:
-        joystick=joysticks[0]
-        joystick.init()
-
     while player.alive():
         #get input
         for event in pygame.event.get():
@@ -209,6 +204,12 @@ def main():
 
     pygame.mixer.music.load('data/tchtada.ogg')
     pygame.mixer.music.play(-1)
+
+    joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+    if joysticks:
+        joystick=joysticks[0]
+        joystick.init()
+
 
     const.font_init()
     # Set the display mode
