@@ -77,7 +77,7 @@ def game(screen):
 
     # The actors
     player = Heroes(monsters)
-    nummonster = 1
+    nummonster = 0
     score = Scoring()
 
     # a clock
@@ -130,7 +130,7 @@ def game(screen):
             end_sound(clock)
             newlevel_sound.play()
             player.center()
-            nummonster += 1
+            nummonster += 2
             angle = 2*math.pi/nummonster
             for i in range(nummonster):
                 Monsters(player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
@@ -154,12 +154,13 @@ def game(screen):
                 if not SCREENRECT.contains(sprite.rect) and sprite.locked:
                     broken.add(sprite)
                     score.wall(sprite)
-                else:
+                elif sprite not in broken:
                     for other in compare_to:
                         if sprite.dist(other) < sprite.width:
                             score.collide(sprite,other)
                             broken.add(sprite)
                             broken.add(other)
+                            break
 
                 compare_to.append(sprite)
 
