@@ -109,7 +109,8 @@ class Heroes(MovingAgent):
         for target in self.targets:
             dist1 = (target.posx-self.posx)*self.diry - (target.posy-self.posy)*self.dirx
             dist2 = target.dist(self)
-            if abs(dist1) < target.height and dist2 > 0 and dist2 < RANGE:
+            dist3 = (target.posx-self.posx)*self.dirx + (target.posy-self.posy)*self.diry
+            if abs(dist1) < target.height and dist3 > 0 and dist2 < RANGE:
                 in_range.append((target,dist1,dist2))
         if not in_range:
             self.fail_sound.play()
