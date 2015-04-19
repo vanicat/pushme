@@ -69,7 +69,8 @@ class Heroes(MovingAgent):
         self.accelerating = 0
         self.turning = 0
 
-        self.locked = None
+        self.locked = pygame.sprite.GroupSingle()
+
 
     def turn(self, value):
         self.turning = self.rotatespeed * value
@@ -96,6 +97,11 @@ class Heroes(MovingAgent):
         def thrd(x):
             x[2]
 
+        if self.locked.sprite:
+            self.locked.sprite.unlock()
+            self.locked.remove(self.locked.sprite)
+            return
+
         in_range = []
         for target in self.targets:
             dist1 = (target.posx-self.posx)*self.diry - (target.posy-self.posy)*self.dirx
@@ -104,14 +110,11 @@ class Heroes(MovingAgent):
                 in_range.append((target,dist1,dist2))
         if not in_range: return
         locked = min(in_range,key=thrd)
-        self.locked = locked[0]
+        self.locked.sprite = locked[0]
         locked[0].lock(locked[2],locked[1] > 0)
 
     def unlock(self):           # Dying monster are not unlocked...
-        if self.locked:
-            self.locked.unlock()
-            self.locked = None
-
+        pass
 
     def __call__(self,action):
         self.action[action]()
@@ -156,4 +159,4 @@ class Monsters(MovingAgent):
             self.rotate = -90
 
     def unlock(self):
-        pass
+        self.locked = False
