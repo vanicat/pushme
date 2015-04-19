@@ -4,10 +4,10 @@ from pygame.locals import *
 SIZE           = 300
 SCREENRECT     = Rect(0, 0, 1000, 700)
 
-PLROTATESPEED  = 2
+PLROTATESPEED  = 4
 BOTROTATESPEED = 1
-ROTATESPEED    = 1
-RANGE          = 200
+ROTATESPEED    = 4
+RANGE          = 100
 MONSTERSPEED   = 1.2
 
 MENUHEIGHT     = 70
