@@ -29,7 +29,6 @@ Line = LineC()
 
 
 class MenuEntry(pygame.sprite.Sprite):
-    prev = None
     def __init__(self,label,result,width):
         pygame.sprite.Sprite.__init__(self,self.containers)
 
@@ -76,6 +75,7 @@ def menu(screen):
     visible = pygame.sprite.RenderUpdates()
 
     MenuEntry.containers = visible, entries
+    MenuEntry.prev = None
     Line.pos = 0
     Line.screen = screen
 
