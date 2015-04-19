@@ -21,5 +21,5 @@ class Scoring(pygame.sprite.Sprite):
             self.score += 40
 
     def update(self):
-        self.image = const.font.render("{}".format(self.score),True, (0,0,0,255))
+        self.image = const.font.default.render("{}".format(self.score),True, (0,0,0,255))
         self.rect  = self.image.get_rect(midtop=const.SCREENRECT.midtop)

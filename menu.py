@@ -13,7 +13,7 @@ class MenuEntry(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midtop=const.SCREENRECT.midtop)
 
 
-        self.label = const.font_menu.render(label, True, (0,0,0,255))
+        self.label = const.font.menu.render(label, True, (0,0,0,255))
         self.label_rect = self.label.get_rect(center=self.rect.center)
 
         self.rect.move_ip(0,posy)

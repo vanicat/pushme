@@ -13,11 +13,11 @@ class Item(pygame.sprite.Sprite): # not sprite...
 
         rectimage = self.image.get_rect()
 
-        labelnum = const.font_menu.render("{}:".format(pos), True, (0,0,0,255))
+        labelnum = const.font.highscore.render("{}:".format(pos), True, (0,0,0,255))
         rect = labelnum.get_rect(midleft=rectimage.midleft)
         self.image.blit(labelnum,rect)
 
-        labelscore = const.font_menu.render("{}".format(score), True, (0,0,0,255))
+        labelscore = const.font.highscore.render("{}".format(score), True, (0,0,0,255))
         rect = labelscore.get_rect(midright=rectimage.midright)
         self.image.blit(labelscore,rect)
 

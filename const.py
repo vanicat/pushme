@@ -11,10 +11,12 @@ RANGE          = 200
 
 MENUHEIGHT     = 70
 
-font = None
-font_menu = None
+class font:
+    default = None
+    menu = None
+    highscore = None
 
 def font_init():
-    global font, font_menu
-    font = pygame.font.Font("data/font/Reality Hyper Regular.ttf",20)
-    font_menu = pygame.font.Font("data/font/darktech_ldr.ttf",40)
+    font.default = pygame.font.Font("data/font/Reality Hyper Regular.ttf",20)
+    font.menu = pygame.font.Font("data/font/darktech_ldr.ttf",40)
+    font.highscore = pygame.font.Font("data/font/Squares Bold Free.otf",40)
