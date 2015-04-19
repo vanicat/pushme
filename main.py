@@ -11,7 +11,7 @@ from const import *
 import const
 from actors import *
 from scoring import *
-
+import menu
 
 def load_image(name):
     fullname = os.path.join('data', name)
@@ -23,16 +23,7 @@ def load_image(name):
     image = image.convert_alpha()
     return image
 
-
-def main():
-    pygame.init()
-
-    const.font_init()
-    # Set the display mode
-    winstyle = 0  # |FULLSCREEN
-    bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
-    screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
-
+def game(screen):
     # Set background
     background = pygame.Surface(screen.get_size()).convert()
     imgbg = load_image('background.png')
@@ -149,6 +140,24 @@ def main():
 
         #cap the framerate
         clock.tick(60)
+    return score.score
+
+
+
+
+def main():
+    pygame.init()
+
+    const.font_init()
+    # Set the display mode
+    winstyle = 0  # |FULLSCREEN
+    bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
+    screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
+
+    todo = menu.menu(screen)
+    while todo != 'quit':
+        game(screen)
+        todo = menu.menu(screen)
 
     if pygame.mixer:
         pygame.mixer.music.fadeout(1000)
