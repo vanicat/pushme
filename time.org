@@ -54,3 +54,5 @@ CLOCK: [2015-04-19 dim. 12:35]--[2015-04-19 dim. 13:18] =>  0:43
 CLOCK: [2015-04-19 dim. 14:00]--[2015-04-19 dim. 16:38] =>  2:38
 ** Bug capture
 CLOCK: [2015-04-19 dim. 16:40]--[2015-04-19 dim. 16:43] =>  0:03
+** Do not kill enemies on wall, and sort highscore
+CLOCK: [2015-04-19 dim. 16:44]--[2015-04-19 dim. 17:15] =>  0:31

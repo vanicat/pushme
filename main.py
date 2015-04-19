@@ -152,8 +152,17 @@ def game(screen):
                 player.kill()
             else:
                 if not SCREENRECT.contains(sprite.rect) and sprite.locked:
-                    broken.add(sprite)
-                    score.wall(sprite)
+                    r = sprite.width/2
+                    if sprite.posx - r < SCREENRECT.left:
+                        sprite.posx = SCREENRECT.left + r
+                    elif sprite.posx + r > SCREENRECT.right:
+                        sprite.posx = SCREENRECT.right - r
+                    if sprite.posy - r < SCREENRECT.top:
+                        sprite.posy = SCREENRECT.top + r
+                    elif sprite.posy + r > SCREENRECT.bottom:
+                        sprite.posy = SCREENRECT.bottom - r
+                    sprite.distance = sprite.dist(player)
+
                 elif sprite not in broken:
                     for other in compare_to:
                         if sprite.dist(other) < sprite.width:
