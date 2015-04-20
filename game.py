@@ -8,19 +8,6 @@ from utils import *
 import math
 
 class Game():
-    def background_filling(self):
-        self.background.fill((62,120,112))
-        imgbg = load_image('background-tile.png')
-        rect = imgbg.get_rect()
-        height=rect.height
-        width=rect.width
-        rect.move_ip((-10,-32))
-        for i in range(13):
-            for j in range(8):
-                self.background.blit(imgbg,rect.move((i*(width+3),j*(height+54))))
-                self.background.blit(imgbg,rect.move((i*(width+3)-width/2-2,j*(height+54)+77)))
-
-
     def __init__(self,screen):
         self.screen = screen
         # Set background
@@ -166,3 +153,15 @@ class Game():
         end_sound(clock)
 
         return score.score
+
+    def background_filling(self):
+        self.background.fill((62,120,112))
+        imgbg = load_image('background-tile.png')
+        rect = imgbg.get_rect()
+        height=rect.height
+        width=rect.width
+        rect.move_ip((-10,-32))
+        for i in range(13):
+            for j in range(8):
+                self.background.blit(imgbg,rect.move((i*(width+3),j*(height+54))))
+                self.background.blit(imgbg,rect.move((i*(width+3)-width/2-2,j*(height+54)+77)))
