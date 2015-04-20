@@ -52,7 +52,7 @@ class Game():
         # The actors
         self.player = Heroes(self.monsters)
         self.nummonster = 0
-        score = Scoring()
+        self.score = Scoring()
 
         # a clock
 
@@ -76,46 +76,14 @@ class Game():
 
         while self.player.alive():
             if self.get_input():
-                return score.score
+                return self.score.score
 
             if not self.monsters.sprites():
                 self.level_up()
 
+            self.natural_selection()
 
-            if not SCREENRECT.contains(self.player.rect):
-                self.player.kill()
-
-            compare_to = []
-            broken = set([])
-            for sprite in self.monsters:
-                if sprite.dist(self.player) < (self.player.width + sprite.width - 4 )/2:
-                    self.player.kill()
-                elif sprite not in broken:
-                    if not SCREENRECT.contains(sprite.rect) and sprite.locked:
-                        r = sprite.width/2
-                        if sprite.posx - r < SCREENRECT.left:
-                            sprite.posx = SCREENRECT.left + r
-                        elif sprite.posx + r > SCREENRECT.right:
-                            sprite.posx = SCREENRECT.right - r
-                        if sprite.posy - r < SCREENRECT.top:
-                            sprite.posy = SCREENRECT.top + r
-                        elif sprite.posy + r > SCREENRECT.bottom:
-                            sprite.posy = SCREENRECT.bottom - r
-                        sprite.distance = sprite.dist(self.player)
-
-                    for other in compare_to:
-                        if sprite.dist(other) < sprite.width - 3:
-                            score.collide(sprite,other)
-                            broken.add(sprite)
-                            broken.add(other)
-                            break
-
-                    compare_to.append(sprite)
-
-            for sprite in broken:
-                sprite.kill()
-
-            #update visible the sprites
+            #update the visible sprites
             if not self.paused: self.visible.update()
 
             # clear/erase the last drawn sprites
@@ -130,7 +98,7 @@ class Game():
 
         end_sound(self.clock)
 
-        return score.score
+        return self.score.score
 
     def background_filling(self):
         self.background.fill((62,120,112))
@@ -178,3 +146,39 @@ class Game():
         for i in range(self.nummonster):
             Monsters(self.player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
                                           SCREENRECT.centery+SIZE*math.sin(angle*i))
+
+    #
+    # natural_selection: killing what should die.
+    #
+    def natural_selection(self):
+        if not SCREENRECT.contains(self.player.rect):
+            self.player.kill()
+
+        compare_to = []
+        broken = set([])
+        for sprite in self.monsters:
+            if sprite.dist(self.player) < (self.player.width + sprite.width - 4 )/2:
+                self.player.kill()
+            elif sprite not in broken:
+                if not SCREENRECT.contains(sprite.rect) and sprite.locked:
+                    r = sprite.width/2
+                    if sprite.posx - r < SCREENRECT.left:
+                        sprite.posx = SCREENRECT.left + r
+                    elif sprite.posx + r > SCREENRECT.right:
+                        sprite.posx = SCREENRECT.right - r
+                    if sprite.posy - r < SCREENRECT.top:
+                        sprite.posy = SCREENRECT.top + r
+                    elif sprite.posy + r > SCREENRECT.bottom:
+                        sprite.posy = SCREENRECT.bottom - r
+                    sprite.distance = sprite.dist(self.player)
+
+                for other in compare_to:
+                    if sprite.dist(other) < sprite.width - 3:
+                        self.score.collide(sprite,other)
+                        broken.add(sprite)
+                        broken.add(other)
+                        break
+
+                compare_to.append(sprite)
+        for sprite in broken:
+            sprite.kill()
