@@ -39,6 +39,7 @@ class Game():
         Monsters.wall_sound = load_sound('wall.wav')
 
         self.newlevel_sound = load_sound('end-level.wav')
+        self.clock = pygame.time.Clock()
 
     def __call__(self):
         self.monsters.empty()
@@ -54,7 +55,6 @@ class Game():
         score = Scoring()
 
         # a clock
-        clock = pygame.time.Clock()
 
         self.action = {
             K_RIGHT: self.player.turn_right,
@@ -79,7 +79,7 @@ class Game():
                 return score.score
 
             if not self.monsters.sprites():
-                end_sound(clock)
+                end_sound(self.clock)
                 self.newlevel_sound.play()
                 self.player.center()
                 self.nummonster += 2
@@ -132,9 +132,9 @@ class Game():
             pygame.display.update(dirty)
 
             #cap the framerate
-            clock.tick(60)
+            self.clock.tick(60)
 
-        end_sound(clock)
+        end_sound(self.clock)
 
         return score.score
 
