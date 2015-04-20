@@ -4,7 +4,10 @@
 # https://creativecommons.org/publicdomain/zero/1.0/
 
 import pygame
-import pygame._view
+try:
+    import pygame._view
+except ImportError:
+    pass
 from pygame.locals import *
 import os.path, math
 
