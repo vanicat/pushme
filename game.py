@@ -54,6 +54,10 @@ class Game():
         self.newlevel_sound = load_sound('end-level.wav')
 
     def __call__(self):
+        self.monsters.empty()
+        self.breakable.empty()
+        self.visible.empty()
+
         self.screen.blit(self.background, (0,0))
         pygame.display.flip()
 
