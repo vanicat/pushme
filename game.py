@@ -81,11 +81,6 @@ class Game():
             if not self.monsters.sprites():
                 self.level_up()
 
-            # clear/erase the last drawn sprites
-            self.visible.clear(self.screen, self.background)
-
-            #update visible the sprites
-            if not self.paused: self.visible.update()
 
             if not SCREENRECT.contains(self.player.rect):
                 self.player.kill()
@@ -119,6 +114,12 @@ class Game():
 
             for sprite in broken:
                 sprite.kill()
+
+            #update visible the sprites
+            if not self.paused: self.visible.update()
+
+            # clear/erase the last drawn sprites
+            self.visible.clear(self.screen, self.background)
 
             #draw the scene
             dirty = self.visible.draw(self.screen)
