@@ -79,14 +79,7 @@ class Game():
                 return score.score
 
             if not self.monsters.sprites():
-                end_sound(self.clock)
-                self.newlevel_sound.play()
-                self.player.center()
-                self.nummonster += 2
-                angle = 2*math.pi/self.nummonster
-                for i in range(self.nummonster):
-                    Monsters(self.player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
-                                                  SCREENRECT.centery+SIZE*math.sin(angle*i))
+                self.level_up()
 
             # clear/erase the last drawn sprites
             self.visible.clear(self.screen, self.background)
@@ -171,3 +164,16 @@ class Game():
                 return True
             elif event.type == KEYDOWN and event.key == K_RETURN:
                 self.paused = not self.paused
+
+    #
+    # level_up: call this when everybody is dead
+    #
+    def level_up(self):
+        end_sound(self.clock)
+        self.newlevel_sound.play()
+        self.player.center()
+        self.nummonster += 2
+        angle = 2*math.pi/self.nummonster
+        for i in range(self.nummonster):
+            Monsters(self.player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
+                                          SCREENRECT.centery+SIZE*math.sin(angle*i))
