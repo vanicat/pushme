@@ -66,4 +66,18 @@ CLOCK: [2015-04-19 dim. 18:29]--[2015-04-19 dim. 21:10] =>  2:41
 ** tuning speed, placement...
 CLOCK: [2015-04-19 dim. 22:54]--[2015-04-19 dim. 23:35] =>  0:41
 ** menu tuning: introduction text...
-CLOCK: [2015-04-19 dim. 23:36]
+CLOCK: [2015-04-19 dim. 23:36]--[2015-04-20 lun. 00:46] =>  1:10
+** This game is too hard
+CLOCK: [2015-04-20 lun. 00:46]--[2015-04-20 lun. 00:50] =>  0:04
+** Porting
+CLOCK: [2015-04-20 lun. 00:50]--[2015-04-20 lun. 02:28] =>  1:38
+- installing python and pygame under wine
+- running pygame2exe:
+  #+name: packaging
+  #+begin_src sh
+    wine "C:\\Python27\\python.exe"  pygame2exe.py
+    cp $HOME/.wine/drive_c/windows/system32/python27.dll build/bdist.win32/winexe/bundle-2.7
+    wine "C:\\Python27\\python.exe"  pygame2exe.py
+    cp $HOME/.wine/drive_c/Python27/Lib/site-packages/pygame/*.dll dist
+  #+end_src
+- It seem that it is ok
