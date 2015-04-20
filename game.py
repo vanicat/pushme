@@ -50,7 +50,7 @@ class Game():
 
         # The actors
         self.player = Heroes(self.monsters)
-        nummonster = 0
+        self.nummonster = 0
         score = Scoring()
 
         # a clock
@@ -82,9 +82,9 @@ class Game():
                 end_sound(clock)
                 self.newlevel_sound.play()
                 self.player.center()
-                nummonster += 2
-                angle = 2*math.pi/nummonster
-                for i in range(nummonster):
+                self.nummonster += 2
+                angle = 2*math.pi/self.nummonster
+                for i in range(self.nummonster):
                     Monsters(self.player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
                                                   SCREENRECT.centery+SIZE*math.sin(angle*i))
 
