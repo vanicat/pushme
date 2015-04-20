@@ -4,6 +4,7 @@
 # https://creativecommons.org/publicdomain/zero/1.0/
 
 import pygame
+import pygame._view
 from pygame.locals import *
 import os.path, math
 
