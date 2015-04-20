@@ -1,4 +1,4 @@
-#! /bin/env python2
+#!/usr/bin/env python2
 # Copyright Remi Vanicat <vanicat@debian.org>
 # Licence under CC0: do what ever you want with this
 # https://creativecommons.org/publicdomain/zero/1.0/
