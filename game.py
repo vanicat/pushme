@@ -49,75 +49,59 @@ class Game():
         pygame.display.flip()
 
         # The actors
-        player = Heroes(self.monsters)
+        self.player = Heroes(self.monsters)
         nummonster = 0
         score = Scoring()
 
         # a clock
         clock = pygame.time.Clock()
 
-        action = {
-            K_RIGHT: player.turn_right,
-            K_LEFT: player.turn_left,
-            K_DOWN: player.brake,
-            K_UP: player.accelerate,
-            K_SPACE: player.lock,
+        self.action = {
+            K_RIGHT: self.player.turn_right,
+            K_LEFT: self.player.turn_left,
+            K_DOWN: self.player.brake,
+            K_UP: self.player.accelerate,
+            K_SPACE: self.player.lock,
         }
 
-        stoping = {
-            K_RIGHT: player.no_turn,
-            K_LEFT: player.no_turn,
-            K_DOWN: player.no_accel,
-            K_UP: player.no_accel,
-            K_SPACE: player.unlock,
+        self.stoping = {
+            K_RIGHT: self.player.no_turn,
+            K_LEFT: self.player.no_turn,
+            K_DOWN: self.player.no_accel,
+            K_UP: self.player.no_accel,
+            K_SPACE: self.player.unlock,
         }
 
-        paused = False
+        self.paused = False
 
-        while player.alive():
-            #get input
-            for event in pygame.event.get():
-                if event.type == KEYDOWN and event.key in action:
-                    action[event.key]()
-                elif event.type == KEYUP and event.key in stoping:
-                    stoping[event.key]()
-                elif event.type == JOYAXISMOTION and event.joy == 0 and event.axis == 0:
-                    player.turn(event.value)
-                elif event.type == JOYAXISMOTION and event.joy == 0 and event.axis == 1:
-                    player.accel(-event.value)
-                elif event.type == JOYBUTTONDOWN and event.joy == 0 and event.button == 0:
-                    player.lock()
-                elif event.type == QUIT or \
-                    (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    return score.score
-                elif event.type == KEYDOWN and event.key == K_RETURN:
-                    paused = not paused
-
+        while self.player.alive():
+            if self.get_input():
+                return score.score
 
             if not self.monsters.sprites():
                 end_sound(clock)
                 self.newlevel_sound.play()
-                player.center()
+                self.player.center()
                 nummonster += 2
                 angle = 2*math.pi/nummonster
                 for i in range(nummonster):
-                    Monsters(player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
-                                             SCREENRECT.centery+SIZE*math.sin(angle*i))
+                    Monsters(self.player).move_to(SCREENRECT.centerx+SIZE*math.cos(angle*i),
+                                                  SCREENRECT.centery+SIZE*math.sin(angle*i))
 
             # clear/erase the last drawn sprites
             self.visible.clear(self.screen, self.background)
 
             #update visible the sprites
-            if not paused: self.visible.update()
+            if not self.paused: self.visible.update()
 
-            if not SCREENRECT.contains(player.rect):
-                player.kill()
+            if not SCREENRECT.contains(self.player.rect):
+                self.player.kill()
 
             compare_to = []
             broken = set([])
             for sprite in self.monsters:
-                if sprite.dist(player) < (player.width + sprite.width - 4 )/2:
-                    player.kill()
+                if sprite.dist(self.player) < (self.player.width + sprite.width - 4 )/2:
+                    self.player.kill()
                 elif sprite not in broken:
                     if not SCREENRECT.contains(sprite.rect) and sprite.locked:
                         r = sprite.width/2
@@ -129,7 +113,7 @@ class Game():
                             sprite.posy = SCREENRECT.top + r
                         elif sprite.posy + r > SCREENRECT.bottom:
                             sprite.posy = SCREENRECT.bottom - r
-                        sprite.distance = sprite.dist(player)
+                        sprite.distance = sprite.dist(self.player)
 
                     for other in compare_to:
                         if sprite.dist(other) < sprite.width - 3:
@@ -165,3 +149,25 @@ class Game():
             for j in range(8):
                 self.background.blit(imgbg,rect.move((i*(width+3),j*(height+54))))
                 self.background.blit(imgbg,rect.move((i*(width+3)-width/2-2,j*(height+54)+77)))
+
+
+    #
+    # reading the input
+    #
+    def get_input(self):
+        #get input
+        for event in pygame.event.get():
+            if event.type == KEYDOWN and event.key in self.action:
+                self.action[event.key]()
+            elif event.type == KEYUP and event.key in self.stoping:
+                self.stoping[event.key]()
+            elif event.type == JOYAXISMOTION and event.joy == 0 and event.axis == 0:
+                self.player.turn(event.value)
+            elif event.type == JOYAXISMOTION and event.joy == 0 and event.axis == 1:
+                self.player.accel(-event.value)
+            elif event.type == JOYBUTTONDOWN and event.joy == 0 and event.button == 0:
+                self.player.lock()
+            elif event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                return True
+            elif event.type == KEYDOWN and event.key == K_RETURN:
+                self.paused = not self.paused
