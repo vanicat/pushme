@@ -1,75 +1,96 @@
-* Time du ludum dare
-** exemple sprite:
-CLOCK: [2015-04-18 sam. 09:35]--[2015-04-18 sam. 10:35] =>  1:00
-** making it display stuff
+
+* Time of the ludum dare
+#+BEGIN: clocktable :maxlevel 3 :scope subtree
+#+CAPTION: Clock summary at [2015-04-21 mar. 11:44]
+| Headline                                            | Time      |       |      |
+|-----------------------------------------------------+-----------+-------+------|
+| *Total time*                                        | *1d 0:45* |       |      |
+|-----------------------------------------------------+-----------+-------+------|
+| Time of the ludum dare                              | 1d 0:45   |       |      |
+| \emsp Coding                                        |           | 14:28 |      |
+| \emsp\emsp making it display stuff                  |           |       | 0:45 |
+| \emsp\emsp making it move                           |           |       | 0:23 |
+| \emsp\emsp Coding movement                          |           |       | 0:58 |
+| \emsp\emsp pad: dismiss for now                     |           |       | 0:18 |
+| \emsp\emsp gun                                      |           |       | 2:05 |
+| \emsp\emsp bug graphique monstre                    |           |       | 0:04 |
+| \emsp\emsp collision                                |           |       | 0:28 |
+| \emsp\emsp more monster                             |           |       | 0:14 |
+| \emsp\emsp border condition                         |           |       | 0:05 |
+| \emsp\emsp some AI                                  |           |       | 1:14 |
+| \emsp\emsp scoring                                  |           |       | 0:44 |
+| \emsp\emsp PAD again                                |           |       | 0:31 |
+| \emsp\emsp Border again                             |           |       | 0:34 |
+| \emsp\emsp Some refactoring                         |           |       | 0:25 |
+| \emsp\emsp menu and font                            |           |       | 1:09 |
+| \emsp\emsp High score                               |           |       | 0:43 |
+| \emsp\emsp capture Bug                              |           |       | 0:03 |
+| \emsp\emsp Do not kill enemies on wall, and sort... |           |       | 0:31 |
+| \emsp\emsp More highscore: in menu                  |           |       | 0:26 |
+| \emsp\emsp menu tuning: introduction text...        |           |       | 1:10 |
+| \emsp\emsp Porting                                  |           |       | 1:38 |
+| \emsp Ideas and game design                         |           |  1:34 |      |
+| \emsp\emsp direction of the heros                   |           |       | 0:43 |
+| \emsp\emsp An ideas: what it should do              |           |       | 0:06 |
+| \emsp\emsp tuning speed, placement                  |           |       | 0:41 |
+| \emsp\emsp fix "This game is too hard"              |           |       | 0:04 |
+| \emsp Graphique                                     |           |  4:40 |      |
+| \emsp\emsp some example sprite                      |           |       | 1:00 |
+| \emsp\emsp Drawing another heroes                   |           |       | 0:07 |
+| \emsp\emsp Monster graphic                          |           |       | 0:50 |
+| \emsp\emsp Background and colors                    |           |       | 2:43 |
+| \emsp Musique and sound                             |           |  3:26 |      |
+| \emsp\emsp Sound                                    |           |       | 2:38 |
+| \emsp\emsp music                                    |           |       | 0:48 |
+| \emsp Others                                        |           |  0:37 |      |
+| \emsp\emsp a blog post                              |           |       | 0:37 |
+#+END:
+
+** Coding
+*** making it display stuff
 CLOCK: [2015-04-18 sam. 10:35]--[2015-04-18 sam. 11:20] =>  0:45
-** decide style of move
-CLOCK: [2015-04-18 sam. 11:22]--[2015-04-18 sam. 11:30] =>  0:08
-** making it move
-CLOCK: [2015-04-18 sam. 11:30]--[2015-04-18 sam. 11:45] =>  0:15
-** direction of the heros
-CLOCK: [2015-04-18 sam. 11:45]--[2015-04-18 sam. 12:28] =>  0:43
-** An ideas: what it should do...
-CLOCK: [2015-04-18 sam. 12:29]--[2015-04-18 sam. 12:35] =>  0:06
-** Drawing another heroes
-CLOCK: [2015-04-18 sam. 12:35]--[2015-04-18 sam. 12:42] =>  0:07
-** Coding movement
-CLOCK: [2015-04-18 sam. 14:02]--[2015-04-18 sam. 14:45] =>  0:43
+*** making it move
+CLOCK: [2015-04-18 sam. 11:22]--[2015-04-18 sam. 11:45] =>  0:23
+*** Coding movement
 CLOCK: [2015-04-18 sam. 12:45]--[2015-04-18 sam. 13:00] =>  0:15
-** Monster graphique
-CLOCK: [2015-04-18 sam. 14:45]--[2015-04-18 sam. 15:35] =>  0:50
-** pad: abandon...
+CLOCK: [2015-04-18 sam. 14:02]--[2015-04-18 sam. 14:45] =>  0:43
+*** pad: dismiss for now
 CLOCK: [2015-04-18 sam. 15:39]--[2015-04-18 sam. 15:57] =>  0:18
-** gun
+*** gun
 CLOCK: [2015-04-18 sam. 17:52]--[2015-04-18 sam. 18:07] =>  0:15
 CLOCK: [2015-04-18 sam. 15:57]--[2015-04-18 sam. 17:47] =>  1:50
-** bug graphique monstre
+*** bug graphique monstre
 CLOCK: [2015-04-18 sam. 17:48]--[2015-04-18 sam. 17:52] =>  0:04
-** collision
+*** collision
 CLOCK: [2015-04-18 sam. 18:10]--[2015-04-18 sam. 18:38] =>  0:28
-** more monster
+*** more monster
 CLOCK: [2015-04-18 sam. 18:38]--[2015-04-18 sam. 18:52] =>  0:14
-** border condition
+*** border condition
 CLOCK: [2015-04-18 sam. 18:53]--[2015-04-18 sam. 18:58] =>  0:05
-** some AI
+*** some AI
 CLOCK: [2015-04-18 sam. 18:58]--[2015-04-18 sam. 20:12] =>  1:14
-** some food
-CLOCK: [2015-04-18 sam. 20:12]--[2015-04-18 sam. 21:18] =>  1:06
-** scoring
-CLOCK: [2015-04-18 sam. 21:34]--[2015-04-18 sam. 22:07] =>  0:33
+*** scoring
 CLOCK: [2015-04-18 sam. 21:19]--[2015-04-18 sam. 21:30] =>  0:11
-** blog post!
-CLOCK: [2015-04-18 sam. 22:08]--[2015-04-18 sam. 22:45] =>  0:37
-** PAD again
+CLOCK: [2015-04-18 sam. 21:34]--[2015-04-18 sam. 22:07] =>  0:33
+*** PAD again
 CLOCK: [2015-04-18 sam. 22:45]--[2015-04-18 sam. 23:16] =>  0:31
-** Border again
+*** Border again
 CLOCK: [2015-04-18 sam. 23:21]--[2015-04-18 sam. 23:55] =>  0:34
-** Some refactoring
+*** Some refactoring
 CLOCK: [2015-04-19 dim. 11:00]--[2015-04-19 dim. 11:25] =>  0:25
-** menu and font
+*** menu and font
 CLOCK: [2015-04-19 dim. 11:25]--[2015-04-19 dim. 12:34] =>  1:09
-** High score?
+*** High score
 CLOCK: [2015-04-19 dim. 12:35]--[2015-04-19 dim. 13:18] =>  0:43
-** Sound
-CLOCK: [2015-04-19 dim. 14:00]--[2015-04-19 dim. 16:38] =>  2:38
-** Bug capture
+*** capture Bug
 CLOCK: [2015-04-19 dim. 16:40]--[2015-04-19 dim. 16:43] =>  0:03
-** Do not kill enemies on wall, and sort highscore
+*** Do not kill enemies on wall, and sort highscore
 CLOCK: [2015-04-19 dim. 16:44]--[2015-04-19 dim. 17:15] =>  0:31
-** More highscore: in menu
+*** More highscore: in menu
 CLOCK: [2015-04-19 dim. 17:15]--[2015-04-19 dim. 17:41] =>  0:26
-** music
-CLOCK: [2015-04-19 dim. 17:41]--[2015-04-19 dim. 18:29] =>  0:48
-** Background and colors
-CLOCK: [2015-04-19 dim. 22:52]--[2015-04-19 dim. 22:54] =>  0:02
-CLOCK: [2015-04-19 dim. 18:29]--[2015-04-19 dim. 21:10] =>  2:41
-** tuning speed, placement...
-CLOCK: [2015-04-19 dim. 22:54]--[2015-04-19 dim. 23:35] =>  0:41
-** menu tuning: introduction text...
+*** menu tuning: introduction text...
 CLOCK: [2015-04-19 dim. 23:36]--[2015-04-20 lun. 00:46] =>  1:10
-** This game is too hard
-CLOCK: [2015-04-20 lun. 00:46]--[2015-04-20 lun. 00:50] =>  0:04
-** Porting
+*** Porting
 CLOCK: [2015-04-20 lun. 00:50]--[2015-04-20 lun. 02:28] =>  1:38
 - installing python and pygame under wine
 - running pygame2exe:
@@ -81,3 +102,30 @@ CLOCK: [2015-04-20 lun. 00:50]--[2015-04-20 lun. 02:28] =>  1:38
     cp $HOME/.wine/drive_c/Python27/Lib/site-packages/pygame/*.dll dist
   #+end_src
 - It seem that it is ok
+** Ideas and game design
+*** direction of the heros
+CLOCK: [2015-04-18 sam. 11:45]--[2015-04-18 sam. 12:28] =>  0:43
+*** An ideas: what it should do
+CLOCK: [2015-04-18 sam. 12:29]--[2015-04-18 sam. 12:35] =>  0:06
+*** tuning speed, placement
+CLOCK: [2015-04-19 dim. 22:54]--[2015-04-19 dim. 23:35] =>  0:41
+*** fix "This game is too hard"
+CLOCK: [2015-04-20 lun. 00:46]--[2015-04-20 lun. 00:50] =>  0:04
+** Graphique
+*** some example sprite
+CLOCK: [2015-04-18 sam. 09:35]--[2015-04-18 sam. 10:35] =>  1:00
+*** Drawing another heroes
+CLOCK: [2015-04-18 sam. 12:35]--[2015-04-18 sam. 12:42] =>  0:07
+*** Monster graphic
+CLOCK: [2015-04-18 sam. 14:45]--[2015-04-18 sam. 15:35] =>  0:50
+*** Background and colors
+CLOCK: [2015-04-19 dim. 22:52]--[2015-04-19 dim. 22:54] =>  0:02
+CLOCK: [2015-04-19 dim. 18:29]--[2015-04-19 dim. 21:10] =>  2:41
+** Musique and sound
+*** Sound
+CLOCK: [2015-04-19 dim. 14:00]--[2015-04-19 dim. 16:38] =>  2:38
+*** music
+CLOCK: [2015-04-19 dim. 17:41]--[2015-04-19 dim. 18:29] =>  0:48
+** Others
+*** a blog post
+CLOCK: [2015-04-18 sam. 22:08]--[2015-04-18 sam. 22:45] =>  0:37
