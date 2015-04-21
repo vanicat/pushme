@@ -4,6 +4,9 @@ from pygame.locals import *
 from const import *
 from utils import *
 
+def level_to_x(level):
+    return 290 + 50*level
+
 
 
 class Sound():
@@ -27,14 +30,12 @@ class Sound():
         rect = label.get_rect(midleft=(labelx,soundy))
         background.blit(label,rect)
 
-        dec = rect.right
-
         label = font.default.render(".", True, (0, 0, 0))
         center_music = []
         center_sound = []
 
-        for i in range(10):
-            centerx = dec + 90 + 50*i
+        for i in range(11):
+            centerx = level_to_x(i)
 
             center = (centerx, soundy)
             center_sound.append(center)
