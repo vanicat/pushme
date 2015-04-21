@@ -16,7 +16,7 @@ from const import *
 import menu
 import game
 import highscore
-
+import sound
 
 def main():
     pygame.init()
@@ -41,6 +41,7 @@ def main():
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
 
     thegame = game.Game(screen)
+    thesound = sound.Sound(screen)
 
     todo = menu.menu(screen)
     while todo != 'quit':
@@ -50,7 +51,7 @@ def main():
         elif todo == 'score':
             highscore.call(screen,None)
         elif todo == 'sound':
-            pass
+            thesound()
         todo = menu.menu(screen)
 
     if pygame.mixer:
