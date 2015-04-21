@@ -1,11 +1,12 @@
 import pygame
+from pygame.locals import *
+import math
+
 from actors import Heroes, Monsters
 from scoring import Scoring
 from const import *
-
-from pygame.locals import *
 from utils import *
-import math
+from sound import *
 
 class Game():
     def __init__(self,screen):
@@ -30,15 +31,14 @@ class Game():
         Monsters.src_image = load_image('monsters.png')
 
         # sounds
-        Heroes.fail_sound = load_sound('failed.wav')
-        Heroes.lock_sound = load_sound('success.wav')
+        Heroes.fail_sound = Sound.fail
+        Heroes.lock_sound = Sound.lock
 
-        Heroes.die_sound = load_sound('die.wav')
+        Heroes.die_sound = Sound.heroes_die
 
-        Monsters.die_sound = load_sound('killing.wav')
-        Monsters.wall_sound = load_sound('wall.wav')
+        Monsters.die_sound = Sound.monster_die
 
-        self.newlevel_sound = load_sound('end-level.wav')
+        self.newlevel_sound = Sound.newlevel
         self.clock = pygame.time.Clock()
 
     def __call__(self):

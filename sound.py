@@ -50,6 +50,14 @@ class Sound():
         self.center_sound = center_sound
         self.screen = screen
         self.background = background
+        Sound.fail = load_sound('failed.wav')
+        Sound.lock = load_sound('success.wav')
+
+        Sound.heroes_die = load_sound('die.wav')
+
+        Sound.monster_die = load_sound('killing.wav')
+
+        Sound.newlevel = load_sound('end-level.wav')
 
     def __call__(self):
         self.screen.blit(self.background, (0,0))

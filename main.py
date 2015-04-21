@@ -40,8 +40,8 @@ def main():
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
 
-    thegame = game.Game(screen)
     thesound = sound.Sound(screen)
+    thegame = game.Game(screen)
 
     todo = menu.menu(screen)
     while todo != 'quit':
