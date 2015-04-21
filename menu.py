@@ -94,6 +94,7 @@ def menu(screen):
     pygame.display.flip()
 
     selected_entry.add(MenuEntry("Play",'play',screen.get_width()))
+    MenuEntry("Sound and Music",'sound',screen.get_width())
     MenuEntry("Highscore",'score',screen.get_width())
     MenuEntry("Quit",'quit',screen.get_width())
 

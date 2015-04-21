@@ -49,6 +49,8 @@ def main():
             highscore.call(screen,score)
         elif todo == 'score':
             highscore.call(screen,None)
+        elif todo == 'sound':
+            pass
         todo = menu.menu(screen)
 
     if pygame.mixer:
