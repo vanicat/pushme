@@ -156,29 +156,29 @@ class Game():
 
         compare_to = []
         broken = set([])
-        for sprite in self.monsters:
-            if sprite.dist(self.player) < (self.player.width + sprite.width - 4 )/2:
+        for monster in self.monsters:
+            if monster.dist(self.player) < (self.player.width + monster.width - 4 )/2:
                 self.player.kill()
-            elif sprite not in broken:
-                if not SCREENRECT.contains(sprite.rect) and sprite.locked:
-                    r = sprite.width/2
-                    if sprite.posx - r < SCREENRECT.left:
-                        sprite.posx = SCREENRECT.left + r
-                    elif sprite.posx + r > SCREENRECT.right:
-                        sprite.posx = SCREENRECT.right - r
-                    if sprite.posy - r < SCREENRECT.top:
-                        sprite.posy = SCREENRECT.top + r
-                    elif sprite.posy + r > SCREENRECT.bottom:
-                        sprite.posy = SCREENRECT.bottom - r
-                    sprite.distance = sprite.dist(self.player)
+            elif monster not in broken:
+                if not SCREENRECT.contains(monster.rect) and monster.locked:
+                    r = monster.width/2
+                    if monster.posx - r < SCREENRECT.left:
+                        monster.posx = SCREENRECT.left + r
+                    elif monster.posx + r > SCREENRECT.right:
+                        monster.posx = SCREENRECT.right - r
+                    if monster.posy - r < SCREENRECT.top:
+                        monster.posy = SCREENRECT.top + r
+                    elif monster.posy + r > SCREENRECT.bottom:
+                        monster.posy = SCREENRECT.bottom - r
+                    monster.distance = monster.dist(self.player)
 
                 for other in compare_to:
-                    if sprite.dist(other) < sprite.width - 3:
-                        self.score.collide(sprite,other)
-                        broken.add(sprite)
+                    if monster.dist(other) < monster.width - 3:
+                        self.score.collide(monster,other)
+                        broken.add(monster)
                         broken.add(other)
                         break
 
-                compare_to.append(sprite)
-        for sprite in broken:
-            sprite.kill()
+                compare_to.append(monster)
+        for monster in broken:
+            monster.kill()
