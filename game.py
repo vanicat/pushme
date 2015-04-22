@@ -179,6 +179,7 @@ class Game():
                         broken.add(other)
                         break
 
-                compare_to.add(monster)
+                if monster not in broken:
+                    compare_to.add(monster)
         for monster in broken:
             monster.kill()
