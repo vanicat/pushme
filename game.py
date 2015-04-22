@@ -154,7 +154,7 @@ class Game():
         if not SCREENRECT.contains(self.player.rect):
             self.player.kill()
 
-        compare_to = []
+        compare_to = set([])
         broken = set([])
         for monster in self.monsters:
             if monster.dist(self.player) < (self.player.width + monster.width - 4 )/2:
@@ -179,6 +179,6 @@ class Game():
                         broken.add(other)
                         break
 
-                compare_to.append(monster)
+                compare_to.add(monster)
         for monster in broken:
             monster.kill()
