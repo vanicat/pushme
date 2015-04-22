@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import math
 
-from actors import Heroes, Monsters
+from actors import Heroes, Monsters, Gun
 from scoring import Scoring
 from const import *
 from utils import *
@@ -21,14 +21,19 @@ class Game():
         self.monsters = pygame.sprite.Group()
         self.breakable = pygame.sprite.Group()
         self.visible = pygame.sprite.RenderUpdates()
+        self.behind = pygame.sprite.RenderUpdates()
 
         Heroes.containers = self.visible, self.breakable
         Monsters.containers = self.visible, self.monsters, self.breakable
         Scoring.containers = self.visible
+        Gun.container = self.behind
 
         # images
         Heroes.src_image = load_image('heroes.png')
         Monsters.src_image = load_image('monsters.png')
+
+        # the screen for drawing
+        Heroes.screen = screen
 
         # sounds
         Heroes.fail_sound = Sound.fail
@@ -84,12 +89,18 @@ class Game():
             self.natural_selection()
 
             #update the visible sprites
-            if not self.paused: self.visible.update()
+            if not self.paused:
+                self.visible.update()
+                self.behind.update()
 
             # clear/erase the last drawn sprites
+            self.behind.clear(self.screen, self.background)
             self.visible.clear(self.screen, self.background)
 
             #draw the scene
+            dirty = self.behind.draw(self.screen)
+            pygame.display.update(dirty)
+
             dirty = self.visible.draw(self.screen)
             pygame.display.update(dirty)
 

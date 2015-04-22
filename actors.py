@@ -54,9 +54,40 @@ class MovingAgent(pygame.sprite.Sprite):
         return math.sqrt((other.posx-self.posx)**2 + (other.posy-self.posy)**2)
 
 
+class Gun(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self,[])
+        self.timer = 3
+
+    def shoot(self, x, y, dirx, diry):
+        self.timer = 4
+        width = abs(dirx)*RANGE+3
+        height = abs(diry)*RANGE+3
+
+        rect = Rect(x - width, y - height, 2*width, 2*height)
+
+        self.image = pygame.Surface((2*width,2*height),flags=SRCALPHA).convert_alpha()
+
+        self.rect = rect
+        pygame.draw.line(self.image, (0,0,0),
+                         (width, height),
+                         (width + dirx*RANGE, height + diry*RANGE),
+                         10)
+        self.container.add(self)
+
+    def update(self):
+        self.timer -= 1
+        if not self.timer:
+            self.kill()
+
+
+
+
 class Heroes(MovingAgent):
     def __init__(self, targets):
         MovingAgent.__init__(self,self.containers)
+
+        self.gun = Gun()
 
         self.rotatespeed = PLROTATESPEED
 
@@ -112,6 +143,7 @@ class Heroes(MovingAgent):
             dist3 = (target.posx-self.posx)*self.dirx + (target.posy-self.posy)*self.diry
             if abs(dist1) < target.height and dist3 > 0 and dist2 < RANGE:
                 in_range.append((target,dist1,dist2))
+        self.gun.shoot(self.posx, self.posy,self.dirx, self.diry)
         if not in_range:
             self.fail_sound.play()
             return
