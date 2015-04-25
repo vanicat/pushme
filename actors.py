@@ -167,8 +167,6 @@ class Heroes(MovingAgent):
             x[2]
 
         if self.locked.sprite:
-            self.locked.sprite.unlock()
-            self.locked.remove(self.locked.sprite)
             return
 
         in_range = []
