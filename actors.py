@@ -53,6 +53,41 @@ class MovingAgent(pygame.sprite.Sprite):
     def dist(self,other):
         return math.sqrt((other.posx-self.posx)**2 + (other.posy-self.posy)**2)
 
+class SlowGun(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self,[])
+        self.timer = 3
+
+    def shoot(self, x, y, dirx, diry, target_height):
+        self.timer = 5
+        width = 2*RANGE+3
+        height = 2*RANGE+3
+
+        self.image = pygame.Surface((width,height),flags=SRCALPHA).convert_alpha()
+
+        self.rect = self.image.get_rect(center=(x,y))
+
+        pixelarray = pygame.PixelArray(self.image)
+
+        px = RANGE+1
+        py = RANGE+1
+
+        for tx in range(width):
+            for ty in range(height):
+                dist1 = (tx-px)*diry - (ty-py)*dirx
+                dist2 = math.sqrt((tx-px)**2 + (ty-py)**2)
+                dist3 = (tx-px)*dirx + (ty-py)*diry
+                alpha = 80
+                if abs(dist1) < target_height/2 and dist3 > 0 and dist2 < RANGE - target_height/2+1:
+                    pixelarray[tx, ty]=(125,0,125,alpha)
+
+        self.container.add(self)
+
+    def update(self):
+        self.timer -= 1
+        if not self.timer:
+            self.kill()
+
 
 class Gun(pygame.sprite.Sprite):
     def __init__(self):
@@ -87,7 +122,7 @@ class Heroes(MovingAgent):
     def __init__(self, targets):
         MovingAgent.__init__(self,self.containers)
 
-        self.gun = Gun()
+        self.gun = SlowGun()
 
         self.rotatespeed = PLROTATESPEED
 
@@ -143,7 +178,7 @@ class Heroes(MovingAgent):
             dist3 = (target.posx-self.posx)*self.dirx + (target.posy-self.posy)*self.diry
             if abs(dist1) < target.height and dist3 > 0 and dist2 < RANGE:
                 in_range.append((target,dist1,dist2))
-        self.gun.shoot(self.posx, self.posy,self.dirx, self.diry)
+        self.gun.shoot(self.posx, self.posy,self.dirx, self.diry, target.height)
         if not in_range:
             self.fail_sound.play()
             return

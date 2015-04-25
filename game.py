@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import math
 
-from actors import Heroes, Monsters, Gun
+from actors import Heroes, Monsters, Gun, SlowGun
 from scoring import Scoring
 from const import *
 from utils import *
@@ -27,6 +27,7 @@ class Game():
         Monsters.containers = self.visible, self.monsters, self.breakable
         Scoring.containers = self.visible
         Gun.container = self.behind
+        SlowGun.container = self.behind
 
         # images
         Heroes.src_image = load_image('heroes.png')
